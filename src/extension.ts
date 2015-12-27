@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import {window, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument, Range, Position, DecorationRenderOptions} from 'vscode'; 
+import {window, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument, Range, Position, DecorationRenderOptions, DecorationOptions, MarkedString} from 'vscode'; 
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -20,7 +20,7 @@ export function activate(context: ExtensionContext) {
 export function deactivate() {
 }
 
-class Dcr implements DecorationRenderOptions {
+class DcOps implements DecorationRenderOptions {
     color: string;
     
     constructor(color: string) {
@@ -38,7 +38,7 @@ class Highlighter {
         let doc = editor.document;
         let todo_list = this.getTodo(doc);
         if(todo_list.length > 0) {
-            let options = new Dcr('blue');
+            let options = new DcOps('blue');
             // TODO: bug here!
             editor.setDecorations(window.createTextEditorDecorationType(options), [todo_list[0]]);
             console.log(todo_list);

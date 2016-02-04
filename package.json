@@ -1,7 +1,7 @@
 {
-	"name": "vscode-todo-highlighter",
-	"displayName": "vscode-todo-highlighter",
-	"description": "Highlight TODO text",
+	"name": "vscode-todo-parser",
+	"displayName": "vscode-todo-parser",
+	"description": "Parse TODOs in your project",
 	"version": "0.0.1",
 	"publisher": "kantlove",
 	"engines": {
@@ -11,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:plaintext"
+		"onCommand:extension.start"
 	],
 	"main": "./out/src/extension",
 	"scripts": {
@@ -21,5 +21,11 @@
 	"devDependencies": {
 		"typescript": "^1.6.2",
 		"vscode": "0.10.x"
-	}
+	},
+    "contributes": {
+        "commands": [{
+            "command": "extension.start",
+            "title": "Start"
+        }]
+    }
 }

@@ -37,6 +37,7 @@ export class FileFinder {
                     }
                 });
             }
+            resolve(docs); // no URIs at all
         });
         return ret_promise;
     }

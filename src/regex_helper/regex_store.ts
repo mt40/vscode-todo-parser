@@ -1,4 +1,10 @@
-//export var java = /(\/\*\s*[Tt][Oo][Dd][Oo]([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/\s*[Tt][Oo][Dd][Oo].*)/g;
-// export var java = /\/\/(?:\s*[Tt][Oo][Dd][Oo]\s*:\s*)(.*)/g;
-export var java = '//\\s*{0}(.*)';
+//export var java = '//\\s*{0}(.*)';
+export var java = '(/\\*[\\*\\s\\r\\n]*{0}([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*(?:\\*+/)|//\\s*{0}(.*))';
 export var plaintext = java;
+export var clang = java;
+export var cpp = java;
+export var csharp = java;
+export var python = '#\\s*{0}(.*)';
+export var coffeescript = python;
+export var ada = '--\\s*{0}(.*)';
+export var haskell = ada;

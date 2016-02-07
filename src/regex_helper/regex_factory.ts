@@ -7,6 +7,7 @@ export class RegexFactory {
     private languageId: string = 'plaintext';
     
     constructor(languageId: string) {
+        console.log(languageId);
         if(languageId)
             this.languageId = languageId;
     }

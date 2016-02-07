@@ -30,6 +30,16 @@ export function getRegexSrcForLang(languageId: string): any {
         case 'java': return store.java;
         case 'python': return store.python;
         case 'ada': return store.ada;
-        case 'c#': return store.csharp;
+        case 'csharp': return store.csharp;
+        case 'c': return store.c;
+        case 'cpp': return store.cpp;
+        case 'go': return store.go;
+        case 'coffeescript': return store.coffeescript;
+        case 'fsharp': return store.fsharp;
+        case 'ruby': return store.ruby;
+        case 'r': return store.r;
+        case 'perl': return store.perl;
+        case 'lua': return store.lua;
+        default: return store.plaintext;
     }
 }

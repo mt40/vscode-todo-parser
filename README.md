@@ -3,6 +3,10 @@ Parse TODOs in your working files.
 
 ![alt text](./images/demo.gif "Demo")
 
+##Install
+- Visit the Market [here](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser).
+- Or open VSCode, press **F1** then type this command `ext install todo parser`. Press **Enter** to install.
+
 ##Usage
 - Press **F1** to open your command menu. Then select **Parse TODOs**.
 

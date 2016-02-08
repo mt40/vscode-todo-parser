@@ -1,4 +1,6 @@
 #VSCode TODO Parser Extension
+[VSCode Market](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser) | [Github](https://github.com/kantlove/vscode-todo-parser)
+
 Parse TODOs in your working files.
 
 ![alt text](./images/demo.gif "Demo")

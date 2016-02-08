@@ -2,7 +2,7 @@
 	"name": "vscode-todo-parser",
 	"displayName": "TODO Parser",
 	"description": "Parse TODOs in your working files.",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "minhthai",
 	"engines": {
 		"vscode": "^0.10.1"
@@ -34,7 +34,7 @@
     },
     "icon": "images/icon.png",
     "galleryBanner": {
-        "color": "#bdc3c7",
+        "color": "#ecf0f1",
         "theme": "light"
     }
 }

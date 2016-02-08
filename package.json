@@ -1,9 +1,9 @@
 {
 	"name": "vscode-todo-parser",
-	"displayName": "vscode-todo-parser",
+	"displayName": "TODO Parser",
 	"description": "Parse TODOs in your project",
 	"version": "0.0.1",
-	"publisher": "kantlove",
+	"publisher": "minhthai",
 	"engines": {
 		"vscode": "^0.10.1"
 	},
@@ -25,7 +25,16 @@
     "contributes": {
         "commands": [{
             "command": "extension.start",
-            "title": "Start"
+            "title": "Parse TODOs"
         }]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kantlove/vscode-todo-parser.git"
+    },
+    "icon": "images/icon.png",
+    "galleryBanner": {
+        "color": "#bdc3c7",
+        "theme": "light"
     }
 }

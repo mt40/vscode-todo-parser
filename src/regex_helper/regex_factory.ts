@@ -2,7 +2,7 @@ import lib = require('../lib/lib');
 import store = require('./regex_store');
 
 export class RegexFactory {
-    private static default_markers: string[] = ['TODO:', 'Todo:']; // match markers such as: TODO, todo, ToDo, ...
+    private static default_markers: string[] = ['TODO:', 'Todo:', 'todo:']; // match markers such as: TODO, todo, ToDo, ...
     
     private languageId: string = 'plaintext';
     

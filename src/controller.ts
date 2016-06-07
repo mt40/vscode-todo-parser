@@ -1,8 +1,9 @@
-import {window, commands, workspace, Disposable, TextDocument, Range, Position} from 'vscode'; 
+import {window, commands, workspace, Disposable, TextDocument, Range, Position, StatusBarAlignment, StatusBarItem} from 'vscode'; 
 import wr = require('./worker');
 import ff = require('./file_finder');
 
 export class Controller {
+    private _statusBarItem: StatusBarItem;
     private _disposable: Disposable;
     private _garbage: Disposable[] = [];
     
@@ -17,8 +18,13 @@ export class Controller {
             self.runWorker(docs);
         });
     }
+
+    // Run only on the current document
+    public runOne() {
+        this.runWorker([], true);
+    }
     
-    private runWorker(docs: TextDocument[]) {
+    private runWorker(docs: TextDocument[], noOutput = false) {
         // if there is no folder opened (user opened only 1 file)
         // then we take the document from the current editor
         if (docs.length == 0) {
@@ -29,10 +35,39 @@ export class Controller {
         }
         
         let worker = new wr.Worker(docs);
-        worker.run();
+        let self = this;
+        if(noOutput) { // Run to update status bar so don't need to output anything
+            worker.runNoOutput(function(nTodos: number) {
+                self.updateStatusBar(nTodos);
+            });
+        }
+        else {
+            worker.run();
+        }
         
         this._garbage.push(worker);
     }
+
+    private updateStatusBar(nTodos: number) {
+        // Create as needed
+        if (!this._statusBarItem) {
+            this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
+        }
+
+        // Get the current text editor
+        let editor = window.activeTextEditor;
+        if (!editor) {
+            this._statusBarItem.hide();
+            return;
+        }
+
+        let doc = editor.document;
+        // Update the status bar
+        this._statusBarItem.text = `Todo: ${nTodos}`;
+        this._statusBarItem.show();
+    }
     
-    dispose() {}
+    dispose() {
+        this._statusBarItem.dispose();
+    }
 }

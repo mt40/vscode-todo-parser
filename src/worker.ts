@@ -12,7 +12,7 @@ export class Worker {
         let isEmpty = true;
         let out = window.createOutputChannel('cn_todo_parser');
         out.clear();
-        let index = 1;
+        let index = 1, nTodos = 0;
         
         for (let doc of this.docs) {
             let todo_list = ps.TodoParser.getTodos(doc);
@@ -25,6 +25,7 @@ export class Worker {
                     index++;
                 }
                 isEmpty = false;
+                nTodos = todo_list.length;
             }
         }
         if (isEmpty)
@@ -34,8 +35,20 @@ export class Worker {
         console.log('----------------------------------');
         console.log('Done!');
 
-        if (callback) callback();
+        if (callback) callback(nTodos);
     }
 
-    dispose() { }
+    public runNoOutput(callback?: any) {
+        let nTodos = 0;
+        for (let doc of this.docs) {
+            let todo_list = ps.TodoParser.getTodos(doc);
+
+            if (todo_list.length > 0) {
+                nTodos = todo_list.length;
+            }
+        }
+        if (callback) callback(nTodos);
+    }
+
+    dispose() {}
 }

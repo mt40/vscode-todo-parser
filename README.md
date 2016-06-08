@@ -16,7 +16,7 @@ Parse TODOs in your working files.
 ##What it does
 - Display number of TODOs on your Status Bar
 
-  ![status bar](./images/status_bar.JPG "Status bar")
+  ![status bar](./images/status_bar.jpg "Status bar")
 
 - Detect comments that start with "TODO:", "Todo:", "todo:".
 - We support both single-line and multi-line comments. For example:

@@ -63,7 +63,9 @@ export class Controller {
 
         let doc = editor.document;
         // Update the status bar
-        this._statusBarItem.text = `Todo: ${nTodos}`;
+        //this._statusBarItem.text = `Todo: ${nTodos}`;
+        this._statusBarItem.text = '$(checklist) ' + nTodos;
+        this._statusBarItem.tooltip = (nTodos > 1) ? `${nTodos} TODOs` : `${nTodos} TODO`;
         this._statusBarItem.show();
     }
     

@@ -66,6 +66,7 @@ export class Controller {
         //this._statusBarItem.text = `Todo: ${nTodos}`;
         this._statusBarItem.text = '$(checklist) ' + nTodos;
         this._statusBarItem.tooltip = (nTodos > 1) ? `${nTodos} TODOs` : `${nTodos} TODO`;
+        this._statusBarItem.command = 'extension.start'; // Clicking on this will start the parser (same as typing Parse TODOs in F1 panel)
         this._statusBarItem.show();
     }
     

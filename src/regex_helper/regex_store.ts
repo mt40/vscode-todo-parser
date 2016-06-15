@@ -14,6 +14,7 @@ export var fsharp = '(\\(\\*[\\*\\s\\r\\n]*{0}([^\\*]|[\\r\\n]|(\\*+([^\\*\\)]|[
 export var r = python;
 export var perl = python;
 export var lua = ada;
+export var markdown = java;
 
 export var supportLanguages = [
   'java', 
@@ -30,5 +31,6 @@ export var supportLanguages = [
   'fs', 'fsx', 
   'r', 
   'pl', 'PL', 
-  'lua'
+  'lua',
+  'md', 'MD', 'markdown'
 ];

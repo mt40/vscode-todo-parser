@@ -2,7 +2,7 @@
 	"name": "vscode-todo-parser",
 	"displayName": "TODO Parser",
 	"description": "Parse TODOs in your working files.",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"publisher": "minhthai",
 	"engines": {
 		"vscode": "^0.10.1"
@@ -26,7 +26,8 @@
 		"onLanguage:fsharp",
 		"onLanguage:r",
 		"onLanguage:perl",
-		"onLanguage:lua"
+		"onLanguage:lua",
+		"onLanguage:markdown"
 	],
 	"main": "./out/src/extension",
 	"scripts": {

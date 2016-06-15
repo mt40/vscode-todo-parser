@@ -35,7 +35,7 @@ _Alternatively, in the **F1** command menu, select __Parse TODOs (current docume
 ```
 
 ##Supported languages
-Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl.
+Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

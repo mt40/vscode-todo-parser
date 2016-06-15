@@ -40,6 +40,7 @@ export function getRegexSrcForLang(languageId: string): any {
         case 'r': return store.r;
         case 'perl': return store.perl;
         case 'lua': return store.lua;
+        case 'markdown': return store.markdown;
         default: return store.plaintext;
     }
 }

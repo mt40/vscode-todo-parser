@@ -2,7 +2,7 @@
 	"name": "vscode-todo-parser",
 	"displayName": "TODO Parser",
 	"description": "Parse TODOs in your working files.",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"publisher": "minhthai",
 	"engines": {
 		"vscode": "^0.10.1"
@@ -39,10 +39,16 @@
 		"vscode": "^0.11.x"
 	},
     "contributes": {
-        "commands": [{
-            "command": "extension.start",
-            "title": "Parse TODOs"
-        }]
+		"commands": [
+			{
+				"command": "extension.start",
+				"title": "Parse TODOs (all files)"
+			},
+			{
+				"command": "extension.startCurrent",
+				"title": "Parse TODOs (current document)"
+			}
+		]
     },
     "repository": {
         "type": "git",

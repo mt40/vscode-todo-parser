@@ -10,9 +10,11 @@ Parse TODOs in your working files.
 - Or open VSCode, press **F1** then type this command `ext install todo parser`. Press **Enter** to install.
 
 ##Usage
+- Press __F1__ to open the command menu then select __Parse TODOs (all files)__ to parse code files inside the opened document.
 - The __TODO Counter__ on Status Bar will start automatically.
 - Click on the __Counter__ to parse TODOs in the current document.
-- Alternatively, you can  press **F1** to open your command menu. Then select __Parse TODOs__ (see the demo above)
+
+_Alternatively, in the **F1** command menu, select __Parse TODOs (current document)__ (see the demo above)_
 
 ##What it does
 - Display number of TODOs on your Status Bar

@@ -16,8 +16,8 @@ export class Worker {
         
         for (let doc of this.docs) {
             let todo_list = ps.TodoParser.getTodos(doc);
-
-            if (todo_list.length > 0) {
+            let n = todo_list.length;
+            if (n > 0) {
                 for (let todo of todo_list) {
                     out.appendLine(`${index}.`);
                     out.appendLine(todo.toDisplayString());
@@ -25,11 +25,16 @@ export class Worker {
                     index++;
                 }
                 isEmpty = false;
-                nTodos = todo_list.length;
+                nTodos += todo_list.length;
             }
         }
         if (isEmpty)
             out.appendLine('No TODOs found.');
+        else {
+            out.appendLine('==================================================');
+            let unit = (nTodos > 1) ? 'TODOs' : 'TODO';
+            out.appendLine(`Found ${nTodos} ${unit}.`);
+        }
         out.show(ViewColumn.Three);
 
         console.log('----------------------------------');

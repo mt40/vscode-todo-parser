@@ -16,10 +16,15 @@ export function activate(context: ExtensionContext) {
     var startCommand = commands.registerCommand('extension.start', () => {
         controller.run();
     });
+
+    var startCurrentCommand = commands.registerCommand('extension.startCurrent', () => {
+        controller.runOne();
+    });
     
     // Add to list of disposed items when deactivated
 	//context.subscriptions.push(controller);
     context.subscriptions.push(startCommand);
+    context.subscriptions.push(startCurrentCommand);
 }
 
 // this method is called when your extension is deactivated
@@ -48,7 +53,7 @@ class AutoStarter {
         window.onDidChangeActiveTextEditor(this.handler, this, subscriptions);
 
         // update the counter for the current file
-        this._controller.runOne();
+        this._controller.runOne(true);
 
         // create a combined disposable from both event subscriptions
         this._disposable = Disposable.from(...subscriptions);
@@ -59,6 +64,6 @@ class AutoStarter {
     }
 
     private handler() {
-        this._controller.runOne();
+        this._controller.runOne(true);
     }
 }

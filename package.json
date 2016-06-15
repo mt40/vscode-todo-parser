@@ -42,11 +42,11 @@
 		"commands": [
 			{
 				"command": "extension.start",
-				"title": "Parse all TODOs"
+				"title": "Parse TODOs (all files)"
 			},
 			{
 				"command": "extension.startCurrent",
-				"title": "Parse TODOs in the current document"
+				"title": "Parse TODOs (current document)"
 			}
 		]
     },

@@ -13,15 +13,22 @@ export class Controller {
         
         docs_promise.then(function(docs) {
             self.runWorker(docs);
-        }, function(reason) {
-            let docs = workspace.textDocuments;
-            self.runWorker(docs);
+        },
+        // Cannot find files in current folder manually, switch to using the API 
+        function(reason) {
+            // Uncomment the line below to use the API. However, the API gives
+            // bad and duplicate documents :(
+            //let docs = workspace.textDocuments;
+            self.runWorker([]);
         });
     }
 
-    // Run only on the current document
-    public runOne() {
-        this.runWorker([], true);
+    /**
+     * Same as @run but only for the current document
+     * @noOutput do not show TODOs on the screen
+     */
+    public runOne(noOutput = false) {
+        this.runWorker([], noOutput);
     }
     
     private runWorker(docs: TextDocument[], noOutput = false) {
@@ -66,7 +73,7 @@ export class Controller {
         //this._statusBarItem.text = `Todo: ${nTodos}`;
         this._statusBarItem.text = '$(checklist) ' + nTodos;
         this._statusBarItem.tooltip = (nTodos > 1) ? `${nTodos} TODOs` : `${nTodos} TODO`;
-        this._statusBarItem.command = 'extension.start'; // Clicking on this will start the parser (same as typing Parse TODOs in F1 panel)
+        this._statusBarItem.command = 'extension.startCurrent'; // Clicking on this will start the parser but only for the current file
         this._statusBarItem.show();
     }
     

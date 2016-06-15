@@ -14,3 +14,21 @@ export var fsharp = '(\\(\\*[\\*\\s\\r\\n]*{0}([^\\*]|[\\r\\n]|(\\*+([^\\*\\)]|[
 export var r = python;
 export var perl = python;
 export var lua = ada;
+
+export var supportLanguages = [
+  'java', 
+  'txt',
+  'c', 
+  'cpp', 'h', 'hpp', 
+  'cs', 
+  'py', 
+  'coffee', 
+  'ada', 'adb',
+  'hs', 'lhs',  
+  'rb', 
+  'go', 
+  'fs', 'fsx', 
+  'r', 
+  'pl', 'PL', 
+  'lua'
+];

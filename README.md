@@ -16,6 +16,15 @@ Parse TODOs in your working files.
 
 _Alternatively, in the **F1** command menu, select __Parse TODOs (current document)__ (see the demo above)_
 
+##Settings
+Currently, you can set which files you want to exclude by including
+```json
+"TodoParser": {
+	"exclude": ["cpp"]
+}
+```
+in your __User Settings__ (File > Preferences > User Settings). This will exclude __*.cpp__ files from __Parse TODOs (all files)__.
+
 ##What it does
 - Display number of TODOs on your Status Bar
 

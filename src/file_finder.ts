@@ -2,6 +2,7 @@ import {workspace, Uri, TextDocument} from 'vscode';
 var fs = require('fs');
 var path = require('path');
 import store = require('./regex_helper/regex_store');
+import settings = require('./settings');
 
 export class FileFinder {
     /**
@@ -51,10 +52,14 @@ export class FileFinder {
      * Find all code files of supported languages
      */
     private static findAllCodeFiles(root: string): string[] {
-        let langs = store.supportLanguages;
-        let results = [];
-        for(const lang of langs) {
-            results = results.concat(this.findFilesInPath(root, '.' + lang));
+        let extensions = store.supportLanguages;
+        let results = [], excluded = settings.Settings.getExcluded();
+        console.log('Excluded: ', excluded);
+
+        for(const ext of extensions) {
+            if(excluded.indexOf(ext) >= 0)
+                continue;
+            results = results.concat(this.findFilesInPath(root, ext));
         }
         return results;
     }
@@ -76,11 +81,33 @@ export class FileFinder {
             if (stat.isDirectory()) {
                 results = results.concat(this.findFilesInPath(filename, extension)); // go into sub-folder
             }
-            else if (filename.indexOf(extension) >= 0) {
-                console.log('-- found: ', filename);
-                results.push(filename);
+            else {
+                let ext = this.getFileExtension(filename);
+                if(ext === extension) {
+                    console.log('-- found: ', filename);
+                    results.push(filename);
+                }
             }
         }
         return results;
+    }
+
+    /**
+     * Parse extension from filename.
+     * @return empty string if no file extension or invalid filename
+     */
+    private static getFileExtension(filename: string): string {
+        if(!filename)
+            return;
+        let ext = '', temp = '';
+        for(let i = filename.length - 1; i >= 0; --i) {
+            let char = filename[i];
+            if(char === '.') {
+                ext = temp; // avoid filename without extension
+                break;
+            }
+            temp = char + temp;
+        }
+        return ext;
     }
 }

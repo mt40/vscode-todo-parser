@@ -21,7 +21,7 @@ export class TodoItem {
     public toDisplayString(): string {
         let line = this.range.start.line;
         let col = this.range.start.character;
-        return `File ${this.fileName}. Line ${line}, column ${col}\n----------------------------------\n${this.text}`;
+        return `File ${this.fileName} (ctrl+click to jump)\n----------------------------------\n${this.text}`;
     }
     
     toString() {

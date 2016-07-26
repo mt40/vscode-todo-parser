@@ -2,7 +2,7 @@ import lib = require('../lib/lib');
 import store = require('./regex_store');
 
 export class RegexFactory {
-    private static default_markers: string[] = ['TODO:', 'Todo:', 'todo:']; // match markers such as: TODO, todo, ToDo, ...
+    public static default_markers: string[] = ['TODO:', 'Todo:', 'todo:']; // match markers such as: TODO, todo, ToDo, ...
     
     private languageId: string = 'plaintext';
     
@@ -26,6 +26,9 @@ export class RegexFactory {
      * @param {marker} a Regex pattern that signals the start of a TODO
      */
     private createString(markers: string[]): string {
+        if(markers.length == 0)
+            return lib.stringFormat(this.getFormat(), '');
+
         // merge markers into 1 string
         let merge = '(?:';
         for(let i = 0; i < markers.length; ++i) {
@@ -50,7 +53,10 @@ export class RegexFactory {
      * @param {marker} a Regex pattern that signals the start of a TODO, default is "[Tt][Oo][Dd][Oo]\\s*:" (i.e. "TODO:", "Todo:"")
      */
     public get(markers: string[] = RegexFactory.default_markers): RegExp {
-        let source = this.createString(markers);
+        //let source = this.createString(markers);
+        // here we should parse the comment only, TODO can be 
+        // parse later when processing this comment
+        let source = this.createString([]); 
         let regex = this.createRegExp(source);
         return regex;
     }

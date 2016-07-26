@@ -41,7 +41,9 @@ in your __User Settings__ (File > Preferences > User Settings). This will exclud
 
 /* TODO: this is also ok */
 
-/* Todo: multi-line TODOs is 
+/* It's a nice day today
+ *
+ * Todo: multi-line TODOs are
  * supported too!
  */
 ```

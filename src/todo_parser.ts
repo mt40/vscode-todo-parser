@@ -40,7 +40,7 @@ export class TodoParser {
     /**
      * A comment may contain non-todo text. Get the todo only.
      */
-    private static filter(str: string): [] {
+    private static filter(str: string) {
         let lines = str.split('\n');
         let markers = rg.RegexFactory.default_markers;
         let todo_lines = [];

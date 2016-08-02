@@ -23,7 +23,7 @@ _Alternatively, in the **F1** command menu, select __Parse TODOs (current docume
 Include the below snippet in your __User Settings__ (File > Preferences > User Settings).
 ```json
 "TodoParser": {
-	"exclude": ["cpp", "c"],
+  "exclude": ["cpp", "c"],
   "markers": ["NOTE:", "REMINDER:"]
 }
 ```
@@ -54,7 +54,7 @@ _Note that "TODO:", "Todo:", and "todo:" are added by default._
 ```
 
 ##Supported languages
-Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss.
+Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss, Less.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

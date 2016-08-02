@@ -49,7 +49,7 @@ in your __User Settings__ (File > Preferences > User Settings). This will exclud
 ```
 
 ##Supported languages
-Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown.
+Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

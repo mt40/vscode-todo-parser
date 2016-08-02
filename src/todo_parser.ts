@@ -42,7 +42,7 @@ export class TodoParser {
      */
     private static filter(str: string) {
         let lines = str.split('\n');
-        let markers = rg.RegexFactory.default_markers;
+        let markers = rg.RegexFactory.markers;
         let todo_lines = [];
         let flag = false;
         let skipped = 0; // number of char read before reaching the TODO

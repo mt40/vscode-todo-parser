@@ -20,13 +20,18 @@ Parse TODOs in your working files.
 _Alternatively, in the **F1** command menu, select __Parse TODOs (current document)__ (see the demo above)_
 
 ##Settings
-Currently, you can set which files you want to exclude by including
+Include the below snippet in your __User Settings__ (File > Preferences > User Settings).
 ```json
 "TodoParser": {
-	"exclude": ["cpp"]
+	"exclude": ["cpp", "c"],
+  "markers": ["NOTE:", "REMINDER:"]
 }
 ```
-in your __User Settings__ (File > Preferences > User Settings). This will exclude __*.cpp__ files from __Parse TODOs (all files)__.
+- `exclude` set which files you want to exclude. For example, `"exclude": ["cpp"]` will exclude all __*.cpp__ files from __Parse TODOs (all files)__.
+- `markers` contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
+
+_Note that "TODO:", "Todo:", and "todo:" are added by default._
+
 
 ##What it does
 - Display number of TODOs on your Status Bar

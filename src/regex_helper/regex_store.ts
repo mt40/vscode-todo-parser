@@ -15,7 +15,12 @@ export var r = python;
 export var perl = python;
 export var lua = ada;
 export var markdown = java;
+export var less = java;
+export var sass = java;
+// For CSS, only /*..*/ is available and not allow nested comment
+export var css = '\/\*([^*]*\*+(?:[^\/*][^*]*\*+)*)\/'
 
+// File extensions of supported languages
 export var supportLanguages = [
   'java', 
   'txt',
@@ -32,5 +37,8 @@ export var supportLanguages = [
   'r', 
   'pl', 'PL', 
   'lua',
-  'md', 'MD', 'markdown'
+  'md', 'MD', 'markdown',
+  'less',
+  'css',
+  'sass', 'scss'
 ];

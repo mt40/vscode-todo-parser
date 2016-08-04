@@ -2,7 +2,7 @@
 	"name": "vscode-todo-parser",
 	"displayName": "TODO Parser",
 	"description": "Parse TODOs in your working files.",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"publisher": "minhthai",
 	"engines": {
 		"vscode": "^0.10.7"

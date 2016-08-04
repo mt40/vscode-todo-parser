@@ -4,9 +4,9 @@ export var plaintext = java;
 export var c = java;
 export var cpp = java;
 export var csharp = java;
-export var python = '#\\s*{0}(.*)';
+export var python = '#\s*(.+)';
 export var coffeescript = python;
-export var ada = '--\\s*{0}(.*)';
+export var ada = '--\s*(.+)';
 export var haskell = ada;
 export var ruby = python;
 export var go = java;
@@ -19,6 +19,7 @@ export var less = java;
 export var sass = java;
 // For CSS, only /*..*/ is available and not allow nested comment
 export var css = '\/\*([^*]*\*+(?:[^\/*][^*]*\*+)*)\/'
+export var latex = '%\s*(.+)'
 
 // File extensions of supported languages
 export var supportLanguages = [
@@ -40,5 +41,6 @@ export var supportLanguages = [
   'md', 'MD', 'markdown',
   'less',
   'css',
-  'sass', 'scss'
+  'sass', 'scss',
+  'tex'
 ];

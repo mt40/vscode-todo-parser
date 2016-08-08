@@ -8,16 +8,16 @@ export class UserSettings {
   private static instance: UserSettings;
 
   // File extension exclusion
-  private exclusions = new SettingEntry<string[]>("exclude");
+  private exclusions = new SettingEntry<string[]>("exclude", []);
   // Folder exclusion
-  private folderExclusions = new SettingEntry<string[]>("folderExclude");
+  private folderExclusions = new SettingEntry<string[]>("folderExclude", []);
   // TODO beginning signal
-  private markers = new MarkersSettingEntry("markers");
+  private markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
   private isLoaded = false;
   private SETTING_ROOT_ENTRY = "TodoParser";
 
   constructor() {
-    if(!UserSettings.instance) {
+    if (!UserSettings.instance) {
       UserSettings.instance = this;
       // init
       this.reload();
@@ -58,7 +58,7 @@ export class UserSettings {
     let toLoad = [this.exclusions, this.markers, this.folderExclusions];
 
     if (settings) {
-      for(let st of toLoad) {
+      for (let st of toLoad) {
         st.setValue(settings.get<any>(st.getKey()));
       }
     }
@@ -69,9 +69,11 @@ export class UserSettings {
 class SettingEntry<T> {
   private key: string;
   protected value: T;
+  protected defaultValue: T;
 
-  constructor(key: string) {
+  constructor(key: string, defaultValue?: T) {
     this.key = key;
+    this.defaultValue = defaultValue;
   }
 
   getKey(): string {
@@ -83,7 +85,8 @@ class SettingEntry<T> {
   }
 
   setValue(value: T): boolean {
-    if(value && <T>value) { // check for undefine and type compatibility
+    this.value = this.defaultValue;
+    if (value && <T>value) { // check for undefine and type compatibility
       this.value = value;
       return true;
     }
@@ -92,11 +95,9 @@ class SettingEntry<T> {
 }
 
 class MarkersSettingEntry extends SettingEntry<string[]> {
-  private defaultMarkers = ['TODO:', 'Todo:', 'todo:'];
-
   setValue(value: string[]): boolean {
-    if(super.setValue(value)) {
-      this.value = this.defaultMarkers.concat(this.value);
+    if (super.setValue(value)) {
+      this.value = this.defaultValue.concat(this.value);
       return true;
     }
     return false;

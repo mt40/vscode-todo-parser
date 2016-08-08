@@ -1,3 +1,6 @@
+## v1.5.2
+Add default value for user setting.
+
 ## v1.5.1
 Add support for folder exclusion (in user settings).
 

@@ -9,6 +9,8 @@ export class UserSettings {
 
   // File extension exclusion
   private exclusions = new SettingEntry<string[]>("exclude");
+  // Folder exclusion
+  private folderExclusions = new SettingEntry<string[]>("folderExclude");
   // TODO beginning signal
   private markers = new MarkersSettingEntry("markers");
   private isLoaded = false;
@@ -35,6 +37,13 @@ export class UserSettings {
   }
 
   /**
+   * Folder exclusion
+   */
+  getFolderExclusions(): string[] {
+    return this.folderExclusions.getValue();
+  }
+
+  /**
    * Todo beginning signal
    */
   getMarkers(): string[] {
@@ -46,7 +55,7 @@ export class UserSettings {
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.exclusions, this.markers];
+    let toLoad = [this.exclusions, this.markers, this.folderExclusions];
 
     if (settings) {
       for(let st of toLoad) {

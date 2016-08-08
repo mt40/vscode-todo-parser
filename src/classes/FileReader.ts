@@ -1,5 +1,6 @@
 import {workspace, window, TextDocument, Uri} from 'vscode';
 import {FileType} from '../types/all';
+import {UserSettings} from './UserSettings';
 var fs = require('fs');
 var path = require('path');
 
@@ -51,7 +52,7 @@ export class FileReader {
    * @returns {string[]} List of file names found.
    */
   private static findFilesInPath(root: string): string[] {
-    if (!fs.existsSync(root)) { // path not exists
+    if (!fs.existsSync(root) || FileReader.isFolderExcluded(root)) { // path not exists
       return [];
     }
 
@@ -97,8 +98,28 @@ export class FileReader {
             reject(reason);
           });
       }
-      if (docs.length == 0)
+      if (uris_or_strings.length == 0)
         resolve(docs); // no URIs at all
     });
+  }
+
+  private static isFolderExcluded(folderName: string): boolean {
+    folderName = FileReader.getfolderName(folderName);
+    return UserSettings.getInstance().getFolderExclusions().find(x => x === folderName) !== undefined;
+  }
+
+  private static getfolderName(path: string): string {
+    if (!path)
+      return;
+    let ext = '', temp = '';
+    for (let i = path.length - 1; i >= 0; --i) {
+      let char = path[i];
+      if (char === '/' || char === '\\') {
+        ext = temp;
+        break;
+      }
+      temp = char + temp;
+    }
+    return ext;
   }
 }

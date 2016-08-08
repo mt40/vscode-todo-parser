@@ -11,27 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.start",
-    "onLanguage:plaintext",
-    "onLanguage:java",
-    "onLanguage:c",
-    "onLanguage:cpp",
-    "onLanguage:csharp",
-    "onLanguage:python",
-    "onLanguage:coffeescript",
-    "onLanguage:ada",
-    "onLanguage:haskell",
-    "onLanguage:ruby",
-    "onLanguage:go",
-    "onLanguage:fsharp",
-    "onLanguage:r",
-    "onLanguage:perl",
-    "onLanguage:lua",
-    "onLanguage:markdown",
-    "onLanguage:css",
-    "onLanguage:less",
-    "onLanguage:latex",
-    "onLanguage:sass"
+    "*"
   ],
   "main": "./out/src/extension",
   "scripts": {

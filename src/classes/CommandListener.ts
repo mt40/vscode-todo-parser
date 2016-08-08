@@ -21,12 +21,10 @@ export class CommandListener {
      * Command received from events
      */
     window.onDidChangeTextEditorSelection(() => {
-      console.log("Selection changed");
       callback(new UpdateStatusBarCommand());
     }, this, context.subscriptions);
 
     window.onDidChangeActiveTextEditor(() => {
-      console.log("Editor changed");
       callback(new UpdateStatusBarCommand());
     }, this, context.subscriptions);
 

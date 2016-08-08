@@ -16,14 +16,11 @@ export class Main {
   }
 
   private process(command: CommandType) {
-    console.log("Command received! ");
     let resultPrm = CommandHandler.handle(command);
     resultPrm.then(
       function(result) {
-        console.log("Execution completed: " + result);
       },
       function(reason) {
-        console.log("Execution failed: " + reason);
       }
     )
   }

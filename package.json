@@ -1,73 +1,80 @@
 {
-	"name": "vscode-todo-parser",
-	"displayName": "TODO Parser",
-	"description": "Parse TODOs in your working files.",
-	"version": "1.4.1",
-	"publisher": "minhthai",
-	"engines": {
-		"vscode": "^0.10.7"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.start",
-		"onLanguage:plaintext",
-		"onLanguage:java",
-		"onLanguage:c",
-		"onLanguage:cpp",
-		"onLanguage:csharp",
-		"onLanguage:python",
-		"onLanguage:coffeescript",
-		"onLanguage:ada",
-		"onLanguage:haskell",
-		"onLanguage:ruby",
-		"onLanguage:go",
-		"onLanguage:fsharp",
-		"onLanguage:r",
-		"onLanguage:perl",
-		"onLanguage:lua",
-		"onLanguage:markdown"
-	],
-	"main": "./out/src/extension",
-	"scripts": {
-		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install"
-	},
-	"devDependencies": {
-		"typescript": "^1.6.2",
-		"vscode": "^0.11.x"
-	},
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.start",
-				"title": "Parse TODOs (all files)"
-			},
-			{
-				"command": "extension.startCurrent",
-				"title": "Parse TODOs (current document)"
-			}
-		],
-		"configuration": {
-			"type": "object",
-			"title": "TodoParser configuration",
-			"properties": {
-				"TodoParser": {
-					"type": "object",
-					"description": "Configurations for the extension."
-				}
-			}
-		}
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kantlove/vscode-todo-parser.git"
-	},
-	"icon": "images/icon.png",
-	"galleryBanner": {
-		"color": "#ecf0f1",
-		"theme": "light"
-	}
+  "name": "vscode-todo-parser",
+  "displayName": "TODO Parser",
+  "description": "Parse TODOs in your working files.",
+  "version": "1.5.0",
+  "publisher": "minhthai",
+  "engines": {
+    "vscode": "^0.10.7"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.start",
+    "onLanguage:plaintext",
+    "onLanguage:java",
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:csharp",
+    "onLanguage:python",
+    "onLanguage:coffeescript",
+    "onLanguage:ada",
+    "onLanguage:haskell",
+    "onLanguage:ruby",
+    "onLanguage:go",
+    "onLanguage:fsharp",
+    "onLanguage:r",
+    "onLanguage:perl",
+    "onLanguage:lua",
+    "onLanguage:markdown",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:latex",
+    "onLanguage:sass"
+  ],
+  "main": "./out/src/extension",
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "typescript": "^1.6.2",
+    "vscode": "^0.11.x"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.parseAllFiles",
+        "title": "Parse TODOs (all files)"
+      },
+      {
+        "command": "extension.parseCurrentFile",
+        "title": "Parse TODOs (current document)"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "TodoParser configuration",
+      "properties": {
+        "TodoParser": {
+          "type": "object",
+          "description": "Configurations for the extension."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kantlove/vscode-todo-parser.git"
+  },
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#ecf0f1",
+    "theme": "light"
+  },
+  "dependencies": {
+    "typescript-collections": "^1.1.2"
+  }
 }

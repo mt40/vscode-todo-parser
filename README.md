@@ -24,7 +24,7 @@ Include the below snippet in your __User Settings__ (File > Preferences > User S
 ```json
 "TodoParser": {
   "exclude": ["cpp", "c"],
-  "exclusion": ["node_modules", ".vscode"],
+  "folderExclude": ["node_modules", ".vscode"],
   "markers": ["NOTE:", "REMINDER:"]
 }
 ```

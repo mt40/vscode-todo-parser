@@ -1,3 +1,12 @@
+## v1.6.0
+- Add devMode in UserSetting (currently it is useless).
+
+- Add a proper Logger class.
+
+- Add support for Typescript.
+
+- Add documentation.
+
 ## v1.5.2
 Add default value for user setting.
 

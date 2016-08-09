@@ -47,5 +47,6 @@ class LanguageName {
   static PYTHON       = new LanguageType("python");
   static R            = new LanguageType("r");
   static RUBY         = new LanguageType("ruby");
-  static SCSS         = new LanguageType("scss")
+  static SCSS         = new LanguageType("scss");
+  static TYPESCRIPT   = new LanguageType("typescript");
 }

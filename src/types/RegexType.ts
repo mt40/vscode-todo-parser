@@ -42,7 +42,7 @@ export function isSupported(language: LanguageType): boolean {
 
 /**
  * Contains all suppored language and its corresponding regex.
- * To add a new language, add a new line in this class.
+ * To add a new language, add a new line in this class and in LanguageType.
  * To add a new regex string, add a const in RegexStrings.ts
  */
 class RegexLibrary {
@@ -66,4 +66,5 @@ class RegexLibrary {
   static R            = new RegexType(LanguageType.fromId("r"), RG_PYTHON);
   static RUBY         = new RegexType(LanguageType.fromId("ruby"), RG_PYTHON);
   static SASS         = new RegexType(LanguageType.fromId("sass"), RG_JAVA);
+  static TYPESCRIPT   = new RegexType(LanguageType.fromId("typescript"), RG_JAVA);  
 }

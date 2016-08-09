@@ -14,6 +14,6 @@ export class FileFilter {
 
   private static check(file: FileType): boolean {
     // ok if not in Exclusions
-    return !UserSettings.getInstance().getExclusions().find(x => x === file.getExt());
+    return !UserSettings.getInstance().Exclusions.contains(file.getExt());
   }
 }

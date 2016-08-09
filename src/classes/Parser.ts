@@ -58,7 +58,7 @@ export class Parser {
    */
   private static refine(str: string): string {
     str = this.cleanString(str);
-    let markers = UserSettings.getInstance().getMarkers();
+    let markers = UserSettings.getInstance().Markers.getValue();
     let lines = str.split('\n');
     let todoLines = [];
     let flag = false;

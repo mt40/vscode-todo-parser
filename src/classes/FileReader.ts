@@ -105,7 +105,7 @@ export class FileReader {
 
   private static isFolderExcluded(folderName: string): boolean {
     folderName = FileReader.getfolderName(folderName);
-    return UserSettings.getInstance().getFolderExclusions().find(x => x === folderName) !== undefined;
+    return UserSettings.getInstance().FolderExclusions.contains(folderName);
   }
 
   private static getfolderName(path: string): string {

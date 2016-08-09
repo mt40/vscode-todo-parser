@@ -6,15 +6,15 @@ import {workspace} from 'vscode';
  */
 export class UserSettings {
   private static instance: UserSettings;
-
-  // File extension exclusion
-  private exclusions = new SettingEntry<string[]>("exclude", []);
-  // Folder exclusion
-  private folderExclusions = new SettingEntry<string[]>("folderExclude", []);
-  // TODO beginning signal
-  private markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
   private isLoaded = false;
   private SETTING_ROOT_ENTRY = "TodoParser";
+
+  // File extension exclusion
+  Exclusions = new ExclusionsSettingEntry("exclude", []);
+  // Folder exclusion
+  FolderExclusions = new FolderExclusionsSettingEntry("folderExclude", []);
+  // TODO beginning signal
+  Markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
 
   constructor() {
     if (!UserSettings.instance) {
@@ -30,32 +30,11 @@ export class UserSettings {
   }
 
   /**
-   * File extension exclusion
-   */
-  getExclusions(): string[] {
-    return this.exclusions.getValue();
-  }
-
-  /**
-   * Folder exclusion
-   */
-  getFolderExclusions(): string[] {
-    return this.folderExclusions.getValue();
-  }
-
-  /**
-   * Todo beginning signal
-   */
-  getMarkers(): string[] {
-    return this.markers.getValue();
-  }
-
-  /**
    * Reload all settings (old ones are replaced)
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.exclusions, this.markers, this.folderExclusions];
+    let toLoad = [this.Exclusions, this.Markers, this.FolderExclusions];
 
     if (settings) {
       for (let st of toLoad) {
@@ -66,12 +45,12 @@ export class UserSettings {
   }
 }
 
-class SettingEntry<T> {
+abstract class SettingEntry<T> {
   private key: string;
   protected value: T;
   protected defaultValue: T;
 
-  constructor(key: string, defaultValue?: T) {
+  constructor(key: string, defaultValue: T) {
     this.key = key;
     this.defaultValue = defaultValue;
   }
@@ -94,7 +73,22 @@ class SettingEntry<T> {
   }
 }
 
-class MarkersSettingEntry extends SettingEntry<string[]> {
+abstract class SetSettingEntry<T extends Array<any>> extends SettingEntry<T> {
+  /**
+   * Try to mimic the Set data-structure because TS has no such thing
+   */
+  contains(obj: any) {
+    return this.getValue().find(x => x === obj) !== undefined;
+  }
+}
+
+class ExclusionsSettingEntry extends SetSettingEntry<string[]> {
+}
+
+class FolderExclusionsSettingEntry extends SetSettingEntry<string[]> {
+}
+
+class MarkersSettingEntry extends SetSettingEntry<string[]> {
   setValue(value: string[]): boolean {
     if (super.setValue(value)) {
       this.value = this.defaultValue.concat(this.value);

@@ -15,6 +15,8 @@ export class UserSettings {
   FolderExclusions = new FolderExclusionsSettingEntry("folderExclude", []);
   // TODO beginning signal
   Markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
+  // Turn on/off dev mode
+  DevMode = new DevModeSettingEntry("devMode", false);
 
   constructor() {
     if (!UserSettings.instance) {
@@ -96,4 +98,7 @@ class MarkersSettingEntry extends SetSettingEntry<string[]> {
     }
     return false;
   }
+}
+
+class DevModeSettingEntry extends SettingEntry<boolean> {
 }

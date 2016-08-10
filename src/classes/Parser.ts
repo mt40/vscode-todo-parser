@@ -13,7 +13,7 @@ export class Parser {
 
   private static parseSingleFile(file: FileType): TodoType[] {
     let todos = [];
-    let regex = RegexType.fromLanguage(file.getLanguage());
+    let regex = file.getLanguage().getRegex();
     let textBlocks = [file.getFile().getText()];
     
     if(!textBlocks[0])

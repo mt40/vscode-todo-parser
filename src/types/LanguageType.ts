@@ -1,13 +1,22 @@
 import {Dictionary, hashCode} from '../utils/all';
+import {RegexType} from './RegexType';
+import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX} from '../data/all';
 
 var map = new Dictionary<string, LanguageType>();
 
 export class LanguageType {
   private name: string;
+  private regex: RegexType;
 
-  constructor(name: string) {
+  constructor(name: string, regex: RegexType) {
     this.name = name;
+    this.regex = regex;
+
     map.setValue(name, this);
+  }
+
+  getRegex(): RegexType {
+    return this.regex;
   }
 
   static fromId(id: string): LanguageType {
@@ -25,28 +34,27 @@ export class LanguageType {
   }
 }
 
-
 // 19 languages
 class LanguageName {
-  static ADA          = new LanguageType("ada");
-  static C            = new LanguageType("c");
-  static COFFEESCRIPT = new LanguageType("coffeescript");
-  static CPP          = new LanguageType("cpp");
-  static CSHARP       = new LanguageType("csharp");
-  static CSS          = new LanguageType("css");
-  static FSHARP       = new LanguageType("fsharp");
-  static GO           = new LanguageType("go");
-  static HASKELL      = new LanguageType("haskell");
-  static JAVA         = new LanguageType("java");
-  static LATEX        = new LanguageType("latex");
-  static LESS         = new LanguageType("less");
-  static LUA          = new LanguageType("lua");
-  static MARKDOWN     = new LanguageType("markdown");
-  static PERL         = new LanguageType("perl");
-  static PLAINTEXT    = new LanguageType("plaintext");
-  static PYTHON       = new LanguageType("python");
-  static R            = new LanguageType("r");
-  static RUBY         = new LanguageType("ruby");
-  static SCSS         = new LanguageType("scss");
-  static TYPESCRIPT   = new LanguageType("typescript");
+  static ADA          = new LanguageType("ada", new RegexType(RG_ADA));
+  static C            = new LanguageType("c", new RegexType(RG_JAVA));
+  static COFFEESCRIPT = new LanguageType("coffeescript", new RegexType(RG_PYTHON));
+  static CPP          = new LanguageType("cpp", new RegexType(RG_JAVA));
+  static CSHARP       = new LanguageType("csharp", new RegexType(RG_JAVA));
+  static CSS          = new LanguageType("css", new RegexType(RG_CSS));
+  static FSHARP       = new LanguageType("fsharp", new RegexType(RG_FSHARP));
+  static GO           = new LanguageType("go", new RegexType(RG_JAVA));
+  static HASKELL      = new LanguageType("haskell", new RegexType(RG_ADA));
+  static JAVA         = new LanguageType("java", new RegexType(RG_JAVA));
+  static LATEX        = new LanguageType("latex", new RegexType(RG_LATEX));
+  static LESS         = new LanguageType("less", new RegexType(RG_JAVA));
+  static LUA          = new LanguageType("lua", new RegexType(RG_ADA));
+  static MARKDOWN     = new LanguageType("markdown", new RegexType(RG_JAVA));
+  static PERL         = new LanguageType("perl", new RegexType(RG_PYTHON));
+  static PLAINTEXT    = new LanguageType("plaintext", new RegexType(RG_JAVA));
+  static PYTHON       = new LanguageType("python", new RegexType(RG_PYTHON));
+  static R            = new LanguageType("r", new RegexType(RG_PYTHON));
+  static RUBY         = new LanguageType("ruby", new RegexType(RG_PYTHON));
+  static SASS         = new LanguageType("sass", new RegexType(RG_JAVA));
+  static TYPESCRIPT   = new LanguageType("typescript", new RegexType(RG_JAVA));
 }

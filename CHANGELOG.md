@@ -1,10 +1,11 @@
+## v1.7.0
+- Add support for Elixir and Shell script.
+- Show debug log if devMode is true.
+
 ## v1.6.0
 - Add devMode in UserSetting (currently it is useless).
-
 - Add a proper Logger class.
-
 - Add support for Typescript.
-
 - Add documentation.
 
 ## v1.5.2

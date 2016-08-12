@@ -57,4 +57,5 @@ class LanguageName {
   static RUBY         = new LanguageType("ruby", new RegexType(RG_PYTHON));
   static SASS         = new LanguageType("sass", new RegexType(RG_JAVA));
   static TYPESCRIPT   = new LanguageType("typescript", new RegexType(RG_JAVA));
+  static BASH         = new LanguageType("shellscript", new RegexType(RG_PYTHON));
 }

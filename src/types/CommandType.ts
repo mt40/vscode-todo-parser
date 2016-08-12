@@ -17,7 +17,7 @@ export class ParseCurrentFileCommand implements CommandType {
           files = FileFilter.filter(files);
           let todos = Parser.parse(files);
           OutputWriter.writeTodo(todos);
-          resolve();
+          resolve(todos.length);
         },
         function (reason) {
           reject(reason);
@@ -36,7 +36,7 @@ export class ParseAllFilesCommand implements CommandType {
           files = FileFilter.filter(files);
           let todos = Parser.parse(files);
           OutputWriter.writeTodo(todos);
-          resolve();
+          resolve(todos.length);
         },
         function (reason) {
           reject(reason);
@@ -50,7 +50,7 @@ export class ReloadUserSettingsCommand implements CommandType {
   execute(): Promise<any> {
     return new Promise<any>(function (resolve, reject) {
       UserSettings.getInstance().reload();
-      resolve();
+      resolve('User settings reload.');
     });
   }
 }
@@ -64,7 +64,7 @@ export class UpdateStatusBarCommand implements CommandType {
           files = FileFilter.filter(files);
           let todos = Parser.parse(files);
           OutputWriter.updateStatusBar(todos.length);
-          resolve();
+          resolve(todos.length);
         },
         function (reason) {
           reject(reason);

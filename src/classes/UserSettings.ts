@@ -36,7 +36,7 @@ export class UserSettings {
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.Exclusions, this.Markers, this.FolderExclusions];
+    let toLoad = [this.Exclusions, this.Markers, this.FolderExclusions, this.DevMode];
 
     if (settings) {
       for (let st of toLoad) {
@@ -65,10 +65,10 @@ abstract class SettingEntry<T> {
     return this.value;
   }
 
-  setValue(value: T): boolean {
+  setValue(value: any): boolean {
     this.value = this.defaultValue;
     if (value && <T>value) { // check for undefine and type compatibility
-      this.value = value;
+      this.value = <T>value;
       return true;
     }
     return false;

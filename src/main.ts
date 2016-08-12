@@ -1,5 +1,5 @@
 import {ExtensionContext} from 'vscode'; 
-import {CommandListener, CommandHandler, FileReader, FileFilter, Parser, OutputWriter} from './classes/all';
+import {CommandListener, CommandHandler, Logger, UserSettings} from './classes/all';
 import {CommandType, FileType} from './types/all';
 
 export class Main {
@@ -19,8 +19,12 @@ export class Main {
     let resultPrm = CommandHandler.handle(command);
     resultPrm.then(
       function(result) {
+        if(UserSettings.getInstance().DevMode.getValue())
+          Logger.log(result + ' todos.');
       },
       function(reason) {
+        if(UserSettings.getInstance().DevMode.getValue())
+          Logger.error(reason);
       }
     )
   }

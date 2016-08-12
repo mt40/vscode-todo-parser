@@ -58,4 +58,5 @@ class LanguageName {
   static SASS         = new LanguageType("sass", new RegexType(RG_JAVA));
   static TYPESCRIPT   = new LanguageType("typescript", new RegexType(RG_JAVA));
   static ELIXIR       = new LanguageType("elixir", new RegexType(RG_PYTHON));
+  static BASH         = new LanguageType("shellscript", new RegexType(RG_PYTHON));
 }

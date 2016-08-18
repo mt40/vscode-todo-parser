@@ -14,6 +14,7 @@ Parse TODOs in your working files.
 
 ## Usage
 - Press __F1__ to open the command menu then select __Parse TODOs (all files)__ to parse code files inside the opened document.
+- **Ctrl+Click** on file name in the output panel to jump to the TODO.
 - The __TODO Counter__ on Status Bar will start automatically.
 - Click on the __Counter__ to parse TODOs in the current document.
 
@@ -28,9 +29,9 @@ Include the below snippet in your __User Settings__ (File > Preferences > User S
   "markers": ["NOTE:", "REMINDER:"]
 }
 ```
-- `exclude` set which __file extension__ you want to exclude. For example, `"exclude": ["cpp"]` will exclude all __*.cpp__ files from __Parse TODOs (all files)__.
-- `folderExclude` set which __folder__ you want to exclude. Allowed values are __folder names only__ (not directory path).
-- `markers` contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
+- **exclude**: set which __file extension__ you want to exclude. For example, `"exclude": ["cpp"]` will exclude all __*.cpp__ files from __Parse TODOs (all files)__.
+- **folderExclude**: set which __folder__ you want to exclude. Allowed values are __folder names only__ (not directory path).
+- **markers**: contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
 
 *Note that "TODO:", "Todo:", and "todo:" are added by default.*
 

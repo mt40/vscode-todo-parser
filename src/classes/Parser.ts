@@ -14,21 +14,21 @@ export class Parser {
   private static parseSingleFile(file: FileType): TodoType[] {
     let todos = [];
     let regex = file.getLanguage().getRegex();
-    let textBlocks = [file.getFile().getText()];
+    let blocks: Array<[string, number]> = [[file.getFile().getText(), 0]]; // an item = [text, line number]
     
-    if(!textBlocks[0])
+    if(!blocks[0])
       return todos;
     
     for(let reg of regex.getSteps()) {
       let matched = [];
-      for(let text of textBlocks) {
-        matched = matched.concat(this.matchText(text, reg));
+      for(let item of blocks) {
+        matched = matched.concat(this.matchText(item, reg));
       }
-      textBlocks = matched;
+      blocks = matched;
     }
 
-    for(let todo of textBlocks) {
-      let item = new TodoType(file, todo);
+    for(let todo of blocks) {
+      let item = new TodoType(file, todo[0], todo[1]);
       todos.push(item);
     }
     return todos;
@@ -36,21 +36,35 @@ export class Parser {
 
   /**
    * Match text by a regex string
+   * @return An array of tuple. Each tuple is [matched text, line number]
    */
-  private static matchText(text: string, regex: RegExp): string[] {
-    let matches = [], indices = [];
+  private static matchText(block: [string, number], regex: RegExp): [string, number][] {
+    let text = block[0], line = block[1];
+    let matches = [];
+    let lines = text.split("\n");
     let match;
 
     while (match = regex.exec(text)) {
-      indices.push(match.index);
       let matched_text = (match[1]) ? match[1] : match[0];
       matched_text = this.refine(matched_text);
       if (!matched_text) { // there is no todo
         continue;
       }
-      matches.push(matched_text);
+      let lineNumber = Parser.lineFromIndex(lines, match.index);
+      matches.push([matched_text, lineNumber]);
     }
     return matches;
+  }
+
+  private static lineFromIndex(lines: string[], idx: number) {
+    let count = 0, lineNumber = 1;
+    for(let ln of lines) {
+      count += ln.length;
+      if(count >= idx)
+        return lineNumber;
+      lineNumber += 1;
+    }
+    return lineNumber;
   }
 
   /**

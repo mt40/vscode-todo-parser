@@ -1,3 +1,7 @@
+## v1.7.1
+- Allow Ctrl+Click on file path in output panel to jump to TODO.
+- Update API, minimum support version is now vscode v1.2.
+
 ## v1.7.0
 - Add support for Elixir and Shell script.
 - Show debug log if devMode is true.

@@ -41,7 +41,7 @@ export class Parser {
   private static matchText(block: [string, number], regex: RegExp): [string, number][] {
     let text = block[0], line = block[1];
     let matches = [];
-    let lines = text.split("\n");
+    let lineIndex = Parser.computeIndexList(text.split("\n"));
     let match;
 
     while (match = regex.exec(text)) {
@@ -50,21 +50,32 @@ export class Parser {
       if (!matched_text) { // there is no todo
         continue;
       }
-      let lineNumber = Parser.lineFromIndex(lines, match.index);
+      let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
       matches.push([matched_text, lineNumber]);
     }
     return matches;
   }
 
-  private static lineFromIndex(lines: string[], idx: number) {
-    let count = 0, lineNumber = 1;
-    for(let ln of lines) {
-      count += ln.length;
-      if(count >= idx)
-        return lineNumber;
-      lineNumber += 1;
+  private static computeIndexList(lines: string[]): number[] {
+    let index = [];
+    let chars = 0, n = lines.length;
+    for(let i = 0; i < n; ++i) {
+      index[i] = chars;
+      chars += lines[i].length + 1; // +1 for "\n" that is removed by spliting
     }
-    return lineNumber;
+    return index;
+  }
+
+  private static lineNumberFromIndex(index: number[], key: number) {
+    let low = 0, hi = index.length - 1;
+    while(low <= hi) {
+      let mid = low + (((hi - low) / 2) | 0);
+      if(key >= index[mid])
+        low = mid + 1;
+      else
+        hi = mid - 1;
+    }
+    return hi + 1;
   }
 
   /**

@@ -1,3 +1,6 @@
+## v1.7.2
+- Fix incorrect line number calculation.
+
 ## v1.7.1
 - Allow Ctrl+Click on file path in output panel to jump to TODO.
 - Update API, minimum support version is now vscode v1.2.

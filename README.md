@@ -25,13 +25,19 @@ Include the below snippet in your __User Settings__ (File > Preferences > User S
 ```json
 "TodoParser": {
   "exclude": ["cpp", "c"],
+  "include": ["js"],
   "folderExclude": ["node_modules", ".vscode"],
   "markers": ["NOTE:", "REMINDER:"]
 }
 ```
-- **exclude**: set which __file extension__ you want to exclude. For example, `"exclude": ["cpp"]` will exclude all __*.cpp__ files from __Parse TODOs (all files)__.
-- **folderExclude**: set which __folder__ you want to exclude. Allowed values are __folder names only__ (not directory path).
-- **markers**: contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
+#### exclude
+Set which __file extension__ you want to exclude. For example, `"exclude": ["cpp"]` will exclude all __*.cpp__ files from __Parse TODOs (all files)__.
+#### include
+Set which __file extension__ you want to include. If both **include** and **exclude** entry exist, **include** is prefered (ignore value of **exclude**).
+#### folderExclude
+Set which __folder__ you want to exclude. Allowed values are __folder names only__ (not directory path).
+#### markers
+Contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
 
 *Note that "TODO:", "Todo:", and "todo:" are added by default.*
 

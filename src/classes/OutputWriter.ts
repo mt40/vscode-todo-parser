@@ -1,67 +1,81 @@
 import {window, OutputChannel, StatusBarItem, StatusBarAlignment} from 'vscode';
 import {TodoType} from '../types/all';
-import {CHANNEL_NAME, PARSE_CURRENT_FILE_COMMAND} from '../data/all';
+import {CHANNEL_NAME} from '../data/all';
+import assert = require('assert');
+
+enum State {
+  Idle,
+  Begin,
+  Busy
+}
 
 export class OutputWriter {
   private static outputChannel = OutputWriter.createOutputChannel();
-  private static statusBarItem = OutputWriter.createStatusBarItem();
+
+  private static state = State.Idle;
+  private static lineIndex: number;
 
   private static createOutputChannel(): OutputChannel {
     return window.createOutputChannel(CHANNEL_NAME);
   }
 
   /**
-   * Display parsed todos in a pannel
+   * Begin the writing process. Must be called before calling 
+   * writeTodo(...)
    */
-  static writeTodo(todos: TodoType[]) {
-    let channel = OutputWriter.outputChannel;
-    let index = 1;
+  static begin() {
+    assert(OutputWriter.state === State.Idle, "Previous work is not finished.");
 
-    channel.clear();
-
-    for (let todo of todos) {
-      channel.appendLine(`${index}.`);
-      channel.appendLine(todo.getDisplayString());
-      channel.appendLine('');
-      index++;
-    }
-
-    if (todos.length == 0)
-      channel.appendLine('No TODOs found.');
-    else {
-      channel.appendLine('==================================');
-      let unit = (todos.length > 1) ? 'TODOs' : 'TODO';
-      channel.appendLine(`Found ${todos.length} ${unit}.\n`);
-    }
-    channel.show(true); // show but not get focus
+    OutputWriter.lineIndex = 1;
+    OutputWriter.showPanel();
+    OutputWriter.state = State.Begin;    
   }
 
   /**
-   * Show todo count on the bottom bar.
+   * Finalize the writing process. Must be called after writeTodo(...)
+   * @param {number} todoCount
    */
-  static updateStatusBar(todoCount: number) {
-    // Create as needed
-    let statusBar = OutputWriter.statusBarItem;
+  static finish(todoCount: number) {
+    assert(OutputWriter.state === State.Busy, "There is no work to finish.");
 
-    // Get the current text editor
-    let editor = window.activeTextEditor;
-    if (!editor) {
-      statusBar.hide();
-      return;
+    let channel = OutputWriter.outputChannel;    
+    if (todoCount == 0)
+      channel.appendLine('No TODOs found.');
+    else {
+      channel.appendLine('==================================');
+      let unit = (todoCount > 1) ? 'TODOs' : 'TODO';
+      channel.appendLine(`Found ${todoCount} ${unit}.\n`);
     }
 
-    let doc = editor.document;
-
-    // Update the status bar
-    statusBar.text = '$(checklist) ' + todoCount;
-    statusBar.tooltip = (todoCount > 1) ? `${todoCount} TODOs` : `${todoCount} TODO`;
-    
-    statusBar.show();
+    OutputWriter.state = State.Idle;
   }
 
-  private static createStatusBarItem(): StatusBarItem {
-    let statusItem =  window.createStatusBarItem(StatusBarAlignment.Left);
-    statusItem.command = PARSE_CURRENT_FILE_COMMAND; // Clicking on this will start the parser but only for the current file
-    return statusItem;
+  /**
+   * Display parsed todos in a pannel. finish() must be called
+   * when writing is done.
+   * @param todos List of todos to be written to the panel.
+   */
+  static writeTodo(todos: TodoType[]) {
+    assert(OutputWriter.state === State.Begin || OutputWriter.state === State.Busy, "begin() is not called.");
+    OutputWriter.state = State.Busy;    
+
+    if(!todos || todos.length == 0)
+      return;
+    let channel = OutputWriter.outputChannel;
+
+    for (let todo of todos) {
+      channel.appendLine(`${OutputWriter.lineIndex}.`);
+      channel.appendLine(todo.getDisplayString());
+      channel.appendLine('');
+      OutputWriter.lineIndex++;
+    }
+  }
+
+  private static showPanel() {
+    let channel = OutputWriter.outputChannel;
+    if(OutputWriter.state === State.Idle) {
+      channel.clear();
+      channel.show(true);
+    }
   }
 }

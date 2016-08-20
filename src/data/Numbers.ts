@@ -1,0 +1,1 @@
+export const READ_FILE_CHUNK_SIZE = 50;

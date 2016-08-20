@@ -32,6 +32,10 @@
       {
         "command": "extension.parseCurrentFile",
         "title": "Parse TODOs (current document)"
+      },
+      {
+        "command": "extension.cancelParseAllFiles",
+        "title": "Cancel TODOs Parser"
       }
     ],
     "configuration": {

@@ -44,16 +44,22 @@ export class Parser {
     let lineIndex = Parser.computeIndexList(text.split("\n"));
     let match;
 
-    while (match = regex.exec(text)) {
-      let matched_text = (match[1]) ? match[1] : match[0];
-      matched_text = this.refine(matched_text);
-      if (!matched_text) { // there is no todo
-        continue;
+    try {
+      while (match = regex.exec(text)) {
+        let matched_text = (match[1]) ? match[1] : match[0];
+        matched_text = this.refine(matched_text);
+        if (!matched_text) { // there is no todo
+          continue;
+        }
+        let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
+        matches.push([matched_text, lineNumber]);
       }
-      let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
-      matches.push([matched_text, lineNumber]);
     }
-    return matches;
+    catch (e) {
+    }
+    finally {
+      return matches;
+    }
   }
 
   private static computeIndexList(lines: string[]): number[] {

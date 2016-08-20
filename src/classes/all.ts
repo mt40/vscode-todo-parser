@@ -6,3 +6,4 @@ export * from './Parser';
 export * from './UserSettings';
 export * from './OutputWriter';
 export * from './Logger';
+export * from './StatusBarManager';

@@ -13,7 +13,10 @@ export class FileFilter {
   }
 
   private static check(file: FileType): boolean {
-    // ok if not in Exclusions
-    return !UserSettings.getInstance().Exclusions.contains(file.getExt());
+    // ok if in Inclusions (or not in Exclusions)
+    let setting = UserSettings.getInstance();
+    if(setting.Inclusions.size() > 0)
+      return setting.Inclusions.contains(file.getExt());
+    return !setting.Exclusions.contains(file.getExt());
   }
 }

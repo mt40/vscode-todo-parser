@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>vscode todo parser by kantlove</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/kantlove/vscode-todo-parser">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>vscode todo parser</h1>
+            <h2>An extension for Visual Studio Code. Parse TODOs in your project</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/kantlove/vscode-todo-parser/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/kantlove/vscode-todo-parser/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <p>Parse TODOs in your working files.</p>
+
+<p><img src="./images/demo_vscode1.2.gif" alt="Demo" title="Demo"></p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<ul>
+<li>Visit the Market <a href="https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser">here</a>.</li>
+<li>Or open VSCode, press <strong>F1</strong> then type this command <code>ext install vscode-todo-parser</code>. Press <strong>Enter</strong> to install.</li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<ul>
+<li>Press <strong>F1</strong> to open the command menu then select <strong>Parse TODOs (all files)</strong> to parse code files inside the opened document.</li>
+<li>
+<strong>Ctrl+Click</strong> on file name in the output panel to jump to the TODO.</li>
+<li>The <strong>TODO Counter</strong> on Status Bar will start automatically.</li>
+<li>Click on the <strong>Counter</strong> to parse TODOs in the current document.</li>
+</ul>
+
+<p><em>Alternatively, in the <strong>F1</strong> command menu, select __Parse TODOs (current document)_</em> (see the demo above)_</p>
+
+<p><em>Note that for large projects, the result will be displayed gradually. You can see the progress at the bottom (the bolt icon <g-emoji alias="zap" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a1.png">⚡</g-emoji>). <strong>Clicking on it will cancel the task</strong>.</em></p>
+
+<h2>
+<a id="settings" class="anchor" href="#settings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Settings</h2>
+
+<p>Include the below snippet in your <strong>User Settings</strong> (File &gt; Preferences &gt; User Settings).</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>TodoParser<span class="pl-pds">"</span></span>: {
+  <span class="pl-s"><span class="pl-pds">"</span>exclude<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>cpp<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>],
+  <span class="pl-s"><span class="pl-pds">"</span>include<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>js<span class="pl-pds">"</span></span>],
+  <span class="pl-s"><span class="pl-pds">"</span>folderExclude<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>node_modules<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>.vscode<span class="pl-pds">"</span></span>],
+  <span class="pl-s"><span class="pl-pds">"</span>markers<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>NOTE:<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>REMINDER:<span class="pl-pds">"</span></span>]
+}</pre></div>
+
+<h4>
+<a id="exclude" class="anchor" href="#exclude" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>exclude</h4>
+
+<p>Set which <strong>file extension</strong> you want to exclude. For example, <code>"exclude": ["cpp"]</code> will exclude all <strong>*.cpp</strong> files from <strong>Parse TODOs (all files)</strong>.</p>
+
+<h4>
+<a id="include" class="anchor" href="#include" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>include</h4>
+
+<p>Set which <strong>file extension</strong> you want to include. If both <strong>include</strong> and <strong>exclude</strong> entry exist, <strong>include</strong> is prefered (ignore value of <strong>exclude</strong>).</p>
+
+<h4>
+<a id="folderexclude" class="anchor" href="#folderexclude" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>folderExclude</h4>
+
+<p>Set which <strong>folder</strong> you want to exclude. Allowed values are <strong>folder names only</strong> (not directory path).</p>
+
+<h4>
+<a id="markers" class="anchor" href="#markers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>markers</h4>
+
+<p>Contains the words that signal the start of TODOs. For example, <code>"markers": ["NOTE:"]</code> will enable matching <code>NOTE: this is a new type of TODO</code>. </p>
+
+<p><em>Note that "TODO:", "Todo:", and "todo:" are added by default.</em></p>
+
+<h2>
+<a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h2>
+
+<ul>
+<li>
+<p>Display number of TODOs on your Status Bar</p>
+
+<p><img src="./images/status_bar.jpg" alt="status bar" title="Status bar"></p>
+</li>
+<li><p>Detect comments that start with "TODO:", "Todo:", "todo:".</p></li>
+<li>We support both single-line and multi-line comments. For example:</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// TODO: this todo is valid</span>
+
+<span class="pl-c">/* TODO: this is also ok */</span>
+
+<span class="pl-c">/* It's a nice day today</span>
+<span class="pl-c"> *</span>
+<span class="pl-c"> * Todo: multi-line TODOs are</span>
+<span class="pl-c"> * supported too!</span>
+<span class="pl-c"> */</span></pre></div>
+
+<h2>
+<a id="supported-languages" class="anchor" href="#supported-languages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported languages</h2>
+
+<p>Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script.</p>
+
+<p><em>Note that multi-line comment style is only supported in languages that have the syntax in the example.</em></p>
+
+<h2>
+<a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribution</h2>
+
+<p>This is a small project by a passionate student so any contribution is welcome and loved <g-emoji alias="+1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png">👍</g-emoji></p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/kantlove">kantlove</a> can be found on <a href="https://github.com/kantlove/vscode-todo-parser">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>

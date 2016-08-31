@@ -3,7 +3,7 @@
 [![GitHub stars](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
 
 [![GitHub issues](https://img.shields.io/github/issues/kantlove/vscode-todo-parser.svg)](https://github.com/kantlove/vscode-todo-parser/issues)
-[![Travis](https://img.shields.io/travis/kantlove/vscode-todo-parser.svg?maxAge=2592000)]()
+[![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)]()
 
 Parse TODOs in your working files.
 

@@ -1,6 +1,6 @@
 import {FileType, RegexType, TodoType} from '../types/all';
 import {UserSettings} from './UserSettings';
-import {Set, Queue} from '../utils/all';
+import {Set, Queue, startsWithOne} from '../utils/all';
 
 export class Parser {
   static parse(files: FileType[]): TodoType[] {
@@ -44,16 +44,22 @@ export class Parser {
     let lineIndex = Parser.computeIndexList(text.split("\n"));
     let match;
 
-    while (match = regex.exec(text)) {
-      let matched_text = (match[1]) ? match[1] : match[0];
-      matched_text = this.refine(matched_text);
-      if (!matched_text) { // there is no todo
-        continue;
+    try {
+      while (match = regex.exec(text)) {
+        let matched_text = (match[1]) ? match[1] : match[0];
+        matched_text = this.refine(matched_text);
+        if (!matched_text) { // there is no todo
+          continue;
+        }
+        let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
+        matches.push([matched_text, lineNumber]);
       }
-      let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
-      matches.push([matched_text, lineNumber]);
     }
-    return matches;
+    catch (e) {
+    }
+    finally {
+      return matches;
+    }
   }
 
   private static computeIndexList(lines: string[]): number[] {
@@ -66,11 +72,11 @@ export class Parser {
     return index;
   }
 
-  private static lineNumberFromIndex(index: number[], key: number) {
-    let low = 0, hi = index.length - 1;
+  private static lineNumberFromIndex(indices: number[], key: number) {
+    let low = 0, hi = indices.length - 1;
     while(low <= hi) {
       let mid = low + (((hi - low) / 2) | 0);
-      if(key >= index[mid])
+      if(key >= indices[mid])
         low = mid + 1;
       else
         hi = mid - 1;
@@ -93,7 +99,7 @@ export class Parser {
       if (flag && !ln) { // empty line = end of todo
         break;
       }
-      if (flag || this.startsWith(ln, markers)) {
+      if (flag || startsWithOne(ln, markers)) {
         flag = true; // signal inside a todo
         todoLines.push(ln);
       }
@@ -113,13 +119,5 @@ export class Parser {
     no_leading_asterisk = no_leading_asterisk.replace(/\/+/, ''); // remove slash again!
     str = no_leading_asterisk.trim();
     return str;
-  }
-
-  private static startsWith(str: string, markers: string[]): boolean {
-    for (let marker of markers) {
-      if (str.startsWith(marker))
-        return true;
-    }
-    return false;
   }
 }

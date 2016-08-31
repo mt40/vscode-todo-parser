@@ -1,0 +1,31 @@
+// Variable
+$primary-color: hotpink;
+
+// Mixin
+// TODO: xxx
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+.my-element {
+    color: $primary-color;
+    width: 100%;
+    overflow: hidden;
+}
+
+.my-other-element {
+    @include border-radius(5px);
+}
+
+/* This comment is
+ ****TODO: several lines long.
+ *** * since it uses the CSS comment syntax,
+ * it will appear in the CSS output. ****/
+body { color: black; }
+
+// These comments are only one line long each.
+// TODO: They won't appear in the CSS output,
+// since they use the single-line comment syntax.
+a { color: green; }

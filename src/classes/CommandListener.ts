@@ -1,6 +1,6 @@
 import {window, workspace, commands, ExtensionContext} from 'vscode'; 
-import {ParseAllFilesCommand, ParseCurrentFileCommand, ReloadUserSettingsCommand, UpdateStatusBarCommand} from '../types/CommandType';
-import {PARSE_ALL_FILES_COMMAND, PARSE_CURRENT_FILE_COMMAND} from '../data/all';
+import {ParseAllFilesCommand, ParseCurrentFileCommand, ReloadUserSettingsCommand, UpdateStatusBarCommand, CancelCommand} from '../types/CommandType';
+import {PARSE_ALL_FILES_COMMAND, PARSE_CURRENT_FILE_COMMAND, CANCEL_PARSE_ALL_FILES_COMMAND} from '../const/all';
 
 type Callback = (CommandType) => any;
 
@@ -17,12 +17,16 @@ export class CommandListener {
         callback(new ParseCurrentFileCommand());
     });
 
+    let cancelParseAllFilesCommand = commands.registerCommand(CANCEL_PARSE_ALL_FILES_COMMAND, () => {
+        callback(new CancelCommand());
+    });
+
     /**
      * Command received from events
      */
-    window.onDidChangeTextEditorSelection(() => {
-      callback(new UpdateStatusBarCommand());
-    }, this, context.subscriptions);
+    // window.onDidChangeTextEditorSelection(() => {
+    //   callback(new UpdateStatusBarCommand());
+    // }, this, context.subscriptions);
 
     window.onDidChangeActiveTextEditor(() => {
       callback(new UpdateStatusBarCommand());
@@ -35,5 +39,8 @@ export class CommandListener {
     // Add to list of disposed items when deactivated
     context.subscriptions.push(parseAllFilesCommand);
     context.subscriptions.push(parseCurrentFileCommand);
+
+    // Parse the current file once at the beginning
+    callback(new UpdateStatusBarCommand());
   }
 }

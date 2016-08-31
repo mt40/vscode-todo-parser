@@ -1,13 +1,18 @@
-import {workspace, window, TextDocument, Uri} from 'vscode';
+import {workspace, window, TextDocument, Uri, CancellationToken} from 'vscode';
 import {FileType} from '../types/all';
 import {UserSettings} from './UserSettings';
+import {Logger} from './Logger';
+import {READ_FILE_CHUNK_SIZE} from '../const/all';
+import {sliceArray, getFolderName} from '../utils/all';
 var fs = require('fs');
 var path = require('path');
 
+type ReadFilesCallback = (readFiles: FileType[], progress: number, error?:any) => void;
+type FinishCallback = () => void;
+
 export class FileReader {
   /**
-   * Read file opened by the current text editor (or tab)
-   * @returns {Promise<FileType[]>} One file only.
+   * The turn the file opened by the current text editor (or tab)
    */
   static readCurrentFile(): Promise<FileType[]> {
     return new Promise(function (resolve, reject) {
@@ -24,32 +29,63 @@ export class FileReader {
   }
 
   /**
-   * Read all files in the root folder (project folder)
-   * @returns {Promise<FileType[]>} List of file found.
+   * Return a list of files found in the root folder (project folder).
+   * @param callback  A callback that receives a list of recent read files.
+   * @param token     Token telling the method to stop.
    */
-  static readProjectFiles(): Promise<FileType[]> {
-    return new Promise(function (resolve, reject) {
+  static readProjectFiles(callback: ReadFilesCallback, finish: FinishCallback, token?: CancellationToken) {
       let root = workspace.rootPath;
       if (!root) {
-        reject("Cannot get root folder.");
+        callback([], 0, "Cannot get root folder.");
+        finish();
         return;
       }
+
       let fileNames = FileReader.findFilesInPath(root);
-      let file_prm = FileReader.readFileFromNames(fileNames);
-      file_prm.then(
-        function (files: FileType[]) {
-          resolve(files);
-        },
-        function (reason) {
-          reject(reason);
-        });
-    });
+      let slices = sliceArray(fileNames, READ_FILE_CHUNK_SIZE);
+      FileReader.readFileLoop(slices, 0, callback, finish, token);
+  }
+
+  static readProjectFilesInDir(root: string, callback: ReadFilesCallback, finish: FinishCallback, token?: CancellationToken) {
+      if (!root) {
+        callback([], 0, "Cannot get root folder.");
+        finish();
+        return;
+      }
+
+      let fileNames = FileReader.findFilesInPath(root);
+      let slices = sliceArray(fileNames, READ_FILE_CHUNK_SIZE);
+      FileReader.readFileLoop(slices, 0, callback, finish, token);
   }
 
   /**
-   * Find all files in directory 'root'.
-   * @param {string} root Find starting point.
-   * @returns {string[]} List of file names found.
+   * Continuously reads files into TextDocument objects.
+   * @param slices    Array of document name arrays.
+   * @param index     Current index of @slices.
+   * @param callback  A callback that receives a list of recent read files.
+   * @param token     Token telling the method to stop.
+   */
+  private static readFileLoop(slices: Array<string[]>, index: number, callback: ReadFilesCallback, finish: FinishCallback, token?: CancellationToken) {
+    if (index >= slices.length || (token && token.isCancellationRequested)) {
+      finish();
+      return;
+    }
+    let fileNames = slices[index];
+    let progress = (index / slices.length * 100) | 0;
+    FileReader.readFileFromNames(fileNames).then(
+      function (files: FileType[]) {
+        callback(files, progress);
+        FileReader.readFileLoop(slices, index + 1, callback, finish,  token);
+      },
+      function (reason) {
+        callback([], progress, reason);
+        FileReader.readFileLoop(slices, index + 1, callback, finish, token);
+      });
+  }
+
+  /**
+   * Return files found in a directory.
+   * @param root  Find starting point.
    */
   private static findFilesInPath(root: string): string[] {
     if (!fs.existsSync(root) || FileReader.isFolderExcluded(root)) { // path not exists
@@ -72,9 +108,8 @@ export class FileReader {
   }
 
   /**
-   * Attempt to read files given full file paths.
-   * @param {any} uris_or_strings File paths
-   * @returns {Promise<FileType[]>} List of file read successfully.
+   * Read files given full file paths. Returns a list of file read successfully.
+   * @param uris_or_strings File paths as string or Uri array.
    */
   private static readFileFromNames(uris_or_strings): Promise<FileType[]> {
     return new Promise(function (resolve, reject) {
@@ -104,22 +139,7 @@ export class FileReader {
   }
 
   private static isFolderExcluded(folderName: string): boolean {
-    folderName = FileReader.getfolderName(folderName);
+    folderName = getFolderName(folderName);
     return UserSettings.getInstance().FolderExclusions.contains(folderName);
-  }
-
-  private static getfolderName(path: string): string {
-    if (!path)
-      return;
-    let ext = '', temp = '';
-    for (let i = path.length - 1; i >= 0; --i) {
-      let char = path[i];
-      if (char === '/' || char === '\\') {
-        ext = temp;
-        break;
-      }
-      temp = char + temp;
-    }
-    return ext;
   }
 }

@@ -1,6 +1,6 @@
 import {FileType} from './FileType';
 import {languages, Uri} from 'vscode';
-import {SCHEME} from '../data/all'
+import {SCHEME} from '../const/all'
 
 export class TodoType {
   content: string;

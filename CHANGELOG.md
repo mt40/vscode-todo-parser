@@ -1,3 +1,18 @@
+## 1.8.0
+- Add tests.
+
+(Changelog of **v1.8.0 - beta**)
+
+## 1.8.0 - beta
+- Add 'include' entry in user setting to specify which file extension is included.
+
+Support for large projects:
+- Read files by chunks instead of "all at once".
+- Display the progress on status bar.
+- Allow canceling by clicking on the status bar item.
+- Forcefully display output panel once. Not show again if user closed it.
+
+
 ## v1.7.2
 - Fix incorrect line number calculation.
 

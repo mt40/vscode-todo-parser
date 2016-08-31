@@ -1,6 +1,6 @@
 import {TextDocument} from 'vscode';
 import {LanguageType} from './LanguageType';
-import {hashCode} from '../utils/all';
+import {getFileExtension} from '../utils/all';
 
 export class FileType {
   private data: TextDocument;
@@ -11,7 +11,7 @@ export class FileType {
   constructor(data: TextDocument) {
     this.data = data;
     this.name = data.fileName;
-    this.ext = this.getFileExtension(this.name);
+    this.ext = getFileExtension(this.name);
     this.language = LanguageType.fromId(data.languageId);
   }
 
@@ -32,24 +32,5 @@ export class FileType {
 
   getLanguage(): LanguageType {
     return this.language;
-  }
-
-  /**
-   * Get the file extension part.
-   * @returns {string} Return an empty string if no extension
-   */
-  private getFileExtension(filename: string): string {
-    if (!filename)
-      return;
-    let ext = '', temp = '';
-    for (let i = filename.length - 1; i >= 0; --i) {
-      let char = filename[i];
-      if (char === '.') {
-        ext = temp; // avoid filename without extension
-        break;
-      }
-      temp = char + temp;
-    }
-    return ext;
   }
 }

@@ -1,6 +1,6 @@
 import {Dictionary, hashCode} from '../utils/all';
 import {RegexType} from './RegexType';
-import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX} from '../data/all';
+import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX} from '../const/all';
 
 var map = new Dictionary<string, LanguageType>();
 
@@ -35,7 +35,7 @@ export class LanguageType {
 }
 
 // 19 languages
-class LanguageName {
+export class LanguageName {
   static ADA          = new LanguageType("ada", new RegexType(RG_ADA));
   static C            = new LanguageType("c", new RegexType(RG_JAVA));
   static COFFEESCRIPT = new LanguageType("coffeescript", new RegexType(RG_PYTHON));

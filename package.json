@@ -2,7 +2,7 @@
   "name": "vscode-todo-parser",
   "displayName": "TODO Parser",
   "description": "Parse TODOs in your working files.",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "publisher": "minhthai",
   "engines": {
     "vscode": "^1.2.0"
@@ -17,7 +17,8 @@
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
     "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
     "typescript": "^1.6.2",
@@ -32,6 +33,10 @@
       {
         "command": "extension.parseCurrentFile",
         "title": "Parse TODOs (current document)"
+      },
+      {
+        "command": "extension.cancelParseAllFiles",
+        "title": "Cancel TODOs Parser"
       }
     ],
     "configuration": {
@@ -55,6 +60,8 @@
     "theme": "light"
   },
   "dependencies": {
+    "chance": "^1.0.4",
+    "fs-extra": "^0.30.0",
     "typescript-collections": "^1.1.2"
   },
   "license": "SEE LICENSE IN LICENSE"

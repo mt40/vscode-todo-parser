@@ -1,2 +1,3 @@
 export * from './collections';
-export * from './utils';
+export * from './stringUtils';
+export * from './arrayUtils';

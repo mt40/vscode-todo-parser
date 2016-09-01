@@ -2,8 +2,9 @@ import {workspace, window, TextDocument, Uri, CancellationToken} from 'vscode';
 import {FileType} from '../types/all';
 import {UserSettings} from './UserSettings';
 import {Logger} from './Logger';
+import {FileFilter} from './FileFilter';
 import {READ_FILE_CHUNK_SIZE} from '../const/all';
-import {sliceArray, getFolderName} from '../utils/all';
+import {sliceArray, getFolderName, getFileExtension} from '../utils/all';
 var fs = require('fs');
 var path = require('path');
 
@@ -101,7 +102,11 @@ export class FileReader {
         names = names.concat(FileReader.findFilesInPath(filename)); // go into sub-folder
       }
       else {
-        names.push(filename);
+        let ext = getFileExtension(filename);
+        // Check early to avoid triggering extension of excluded languages
+        if(FileFilter.checkInclusion(ext) && FileFilter.checkSupport(ext)) {
+          names.push(filename);
+        }
       }
     }
     return names;

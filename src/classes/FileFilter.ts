@@ -22,7 +22,7 @@ export class FileFilter {
    * Returns true if the file is not excluded by the user.
    * @param ext File extension used in this test.
    */
-  private static checkInclusion(ext: string): boolean {
+  static checkInclusion(ext: string): boolean {
     let setting = UserSettings.getInstance();
     if(setting.Inclusions.size() > 0)
       return setting.Inclusions.contains(ext);
@@ -33,7 +33,7 @@ export class FileFilter {
    * Returns true if this file is supported.
    * @param ext File extension used in this test.
    */
-  private static checkSupport(ext: string): boolean {
+  static checkSupport(ext: string): boolean {
     return UnsupportFiles.find(x => x === ext) === undefined;
   }
 }

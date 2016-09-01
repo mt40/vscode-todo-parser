@@ -1,9 +1,11 @@
 # VSCode TODO Parser Extension
-[![GitHub stars](https://img.shields.io/badge/marketplace-download-blue.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
-[![GitHub stars](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
+[![marketplace](https://vsmarketplacebadge.apphb.com/version-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
+[![marketplace-installs](https://vsmarketplacebadge.apphb.com/installs-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
+[![marketplace-rating](https://vsmarketplacebadge.apphb.com/rating-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 
 [![GitHub issues](https://img.shields.io/github/issues/kantlove/vscode-todo-parser.svg)](https://github.com/kantlove/vscode-todo-parser/issues)
 [![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)]()
+[![GitHub](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
 
 Parse TODOs in your working files.
 

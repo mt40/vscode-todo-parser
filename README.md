@@ -4,7 +4,7 @@
 [![marketplace-rating](https://vsmarketplacebadge.apphb.com/rating-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 
 [![GitHub issues](https://img.shields.io/github/issues/kantlove/vscode-todo-parser.svg)](https://github.com/kantlove/vscode-todo-parser/issues)
-[![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)]()
+[![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)](https://travis-ci.org/kantlove/vscode-todo-parser)
 [![GitHub](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
 
 Parse TODOs in your working files.

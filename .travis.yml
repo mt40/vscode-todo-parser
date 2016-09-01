@@ -22,3 +22,8 @@ install:
 
 script:
   - npm test --silent
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

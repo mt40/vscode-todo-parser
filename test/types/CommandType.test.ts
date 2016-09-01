@@ -120,7 +120,7 @@ function createTodoFile(todoCount: number): string {
 }
 
 suite("Types - CommandType", function () { // do not use lambda here or timeout() won't work
-  this.timeout(5000);
+  this.timeout(15000);
   this.slow(5000);
   this.retries(2);
   

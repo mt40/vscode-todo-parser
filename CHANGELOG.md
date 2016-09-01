@@ -1,3 +1,8 @@
+## 1.8.1
+- Add *only* entry to configuration. This allows running only in some pre-defined directories.
+- Also update status bar count after running ParseCurrentFile command.
+- Avoid reading excluded folders (previously, they were read and then were discarded).
+
 ## 1.8.0
 - Add tests.
 

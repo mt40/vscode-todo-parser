@@ -1,4 +1,6 @@
-import {workspace} from 'vscode';
+import {workspace, Uri} from 'vscode';
+import {UnsupportFiles} from '../const/all';
+import {FileUri} from '../types/all';
 
 /**
  * Keep track of user settings for this extension.
@@ -13,8 +15,10 @@ export class UserSettings {
   Exclusions = new SetSettingEntry("exclude", []);
   // File extension inclusion
   Inclusions = new SetSettingEntry("include", []);
-  // Folder exclusion
+
   FolderExclusions = new SetSettingEntry("folderExclude", []);
+  Only = new SetSettingEntry("only", []);
+  
   // TODO beginning signal
   Markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
   // Turn on/off dev mode
@@ -38,7 +42,7 @@ export class UserSettings {
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.DevMode];
+    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.Only, this.DevMode];
 
     if (settings) {
       for (let st of toLoad) {
@@ -50,9 +54,50 @@ export class UserSettings {
   }
 
   /**
+   * Returns true if the folder can be used (i.e. is not
+   * excluded by user)
+   * @param folder Folder name to check.
+   */
+  isFolderEligible(folder: string): boolean {
+    if(folder.length == 0)
+      return true; 
+    return !this.FolderExclusions.contains(folder);
+  }
+
+  /**
+   * Returns true if the file extension can be used (i.e. is not
+   * excluded by user)
+   * @param ext The file extension (without dot).
+   */
+  isFileEligible(ext: string): boolean {
+    if(UnsupportFiles.find(x => x === ext) !== undefined)
+      return false;
+    if(this.Inclusions.size() > 0)
+      return this.Inclusions.contains(ext);
+    return !this.Exclusions.contains(ext);
+  }
+
+  getExecutablePaths(): string[] {
+    if(this.Only.size() > 0) {
+      let rs = [];      
+      for(let item of this.Only.getValue()) {
+        try {
+          let path = FileUri.fromString(workspace.rootPath + "/" + item).getPath();
+          rs.push(path);
+        }
+        catch (error) {
+          // ignore this one
+        }
+      }
+      return rs;      
+    }
+    return undefined; // all paths can be used
+  }
+
+  /**
    * Merge values of settings that overlap.
    */
-  private mergeSettings() {
+  mergeSettings() {
     /**
      * If both file inclusion and exclusion are specified
      * in user settings, inclusion is prefered.

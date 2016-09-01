@@ -4,18 +4,6 @@ var Chance = require('chance');
 
 const chance = new Chance();
 
-function randomChar() {
-  return chance.character({ alpha: true }); // only alpha-numeric chars
-}
-
-function randomString() {
-  return chance.string({ length: randomIntRange(2, 10) });
-}
-
-function randomBool() {
-  return chance.bool();
-}
-
 function randomInt(): number {
   return chance.integer();
 }
@@ -24,34 +12,9 @@ function randomIntRange(min, max): number {
   return chance.integer({ "min": min, "max": max });
 }
 
-function randomItem(): any {
-  let rand = [randomInt(), randomBool(), randomChar(), randomString()];
-  return rand[randomIntRange(0, rand.length - 1)];
-}
-
-function randomArray(size: number): any[] {
-  let rs = [];
-  for (let i = 0; i < size; ++i) {
-    rs.push(randomItem());
-  }
-  return rs;
-}
-
-function randomRepeatingArray(size: number, baseLength: number): any[] {
-  assert.equal(size % baseLength, 0, "Must be divisible.");
-  let base = [], rs = [];
-  for (let i = 0; i < baseLength; ++i) {
-    base.push(randomItem());
-  }
-  for(let i = 0; i < size / baseLength; ++i) {
-    rs = rs.concat(base);
-  }
-  return rs;
-}
-
 suite("Classes - UserSettings", function () {
   test("[a, b] -> [a, b]", () => {
-    let value = randomArray(2);
+    let value = ["a", "b"];
     let entry = new SetSettingEntry<any[]>("entryName", []);
     entry.setValue(value);
 
@@ -70,7 +33,7 @@ suite("Classes - UserSettings", function () {
 
   test("[a, a] -> [a]", () => {
     const size = 2, base = 1;
-    let value = randomRepeatingArray(size, base);
+    let value = ["a", "a"];
     let entry = new SetSettingEntry<any[]>("entryName", []);
     entry.setValue(value);
 
@@ -88,7 +51,7 @@ suite("Classes - UserSettings", function () {
 
   test("[a, b, a, b] -> [a, b]", () => {
     const size = 4, base = 2;
-    let value = randomRepeatingArray(size, base);
+    let value = ["a", "b", "a", "b"];
     let entry = new SetSettingEntry<any[]>("entryName", []);
     entry.setValue(value);
 
@@ -123,7 +86,7 @@ suite("Classes - UserSettings", function () {
 
   const _default = ["def"];
   test("[_default, a] -> [_default, a]", () => {
-    let value = _default.concat([randomItem()]);
+    let value = _default.concat(["a"]);
     let entry = new MarkersSettingEntry("markerEntryName", _default);
     entry.setValue(value);
 
@@ -159,7 +122,7 @@ suite("Classes - UserSettings", function () {
   });
 
   test("[a, b] -> [_default, a, b]", () => {
-    let value = randomArray(2);
+    let value = ["a", "b"];
     let merged = _default.concat(value);
     let entry = new MarkersSettingEntry("markerEntryName", _default);
     entry.setValue(value);
@@ -212,4 +175,113 @@ suite("Classes - UserSettings", function () {
       );
     }
   });
+
+  /**
+   * File inclusion and exclusion
+   */
+
+  test("File include [a, b] -> [a, b]", () => {
+    let st = UserSettings.getInstance();
+    let inc = st.Inclusions;
+    let oldInc = inc.getValue();
+
+    let value = ["a", "b"];
+    inc.setValue(value);
+    st.mergeSettings();
+
+    for(let v of value) {
+      assert.ok(st.isFileEligible(v));
+    }
+
+    inc.setValue(oldInc);
+  });
+
+  test("File exclude [a, b] -> [a, b]", () => {
+    let st = UserSettings.getInstance();
+    let exc = st.Exclusions;
+    let oldExc = exc.getValue();
+
+    let value = ["a", "b"];
+    exc.setValue(value);
+    st.mergeSettings();
+
+    for(let v of value) {
+      assert.ok(!st.isFileEligible(v));
+    }
+
+    exc.setValue(oldExc);
+  });
+
+  test("File include [a, b], exclude [a] -> [a, b]", () => {
+    let st = UserSettings.getInstance();
+    let inc = st.Inclusions, exc = st.Exclusions;
+    let oldInc = inc.getValue(), oldExc = exc.getValue();
+
+    let incValue = ["a", "b"], excValue = ["a"];
+    inc.setValue(incValue);
+    exc.setValue(excValue);
+    st.mergeSettings();
+
+    for(let v of incValue) {
+      assert.ok(st.isFileEligible(v));
+    }
+
+    inc.setValue(oldInc);
+    exc.setValue(oldExc);
+  });
+
+  test("File include [a], exclude [a, b] -> [a]", () => {
+    let st = UserSettings.getInstance();
+    let inc = st.Inclusions, exc = st.Exclusions;
+    let oldInc = inc.getValue(), oldExc = exc.getValue();
+
+    let incValue = ["a"], excValue = ["a", "b"];
+    inc.setValue(incValue);
+    exc.setValue(excValue);
+    st.mergeSettings();
+
+    assert.ok(st.isFileEligible(incValue[0]));
+    assert.ok(!st.isFileEligible(excValue[1]));
+
+    inc.setValue(oldInc);
+    exc.setValue(oldExc);
+  });
+
+  test("File include [a, b], exclude [a, b] -> [a, b]", () => {
+    let st = UserSettings.getInstance();
+    let inc = st.Inclusions, exc = st.Exclusions;
+    let oldInc = inc.getValue(), oldExc = exc.getValue();
+
+    let incValue = ["a", "b"], excValue = ["a", "b"];
+    inc.setValue(incValue);
+    exc.setValue(excValue);
+    st.mergeSettings();
+
+    for(let v of incValue) {
+      assert.ok(st.isFileEligible(v));
+    }
+
+    inc.setValue(oldInc);
+    exc.setValue(oldExc);
+  });
+
+  /**
+   * The 'only' entry and folder exclusion entry
+   */
+  
+  test("Folder exclude [a, b] -> cannot use [a, b]", () => {
+    let st = UserSettings.getInstance();
+    let exc = st.FolderExclusions;
+    let oldExc = exc.getValue();
+
+    let excValue = ["a", "b"];
+    exc.setValue(excValue);
+
+    for(let v of excValue) {
+      assert.ok(!st.isFolderEligible(v));
+    }
+
+    exc.setValue(oldExc);
+  });
+
 });

@@ -2,14 +2,14 @@ import {commands, Uri, workspace, TextDocument, window} from 'vscode';
 import * as assert from 'assert';
 import {getFileExtension, getFolderName} from '../../src/utils/all';
 import {CommandHandler} from '../../src/classes/all';
-import {ParseCurrentFileCommand, ParseAllFilesInDirCommand} from '../../src/types/all';
+import {ParseCurrentFileCommand, ParseAllFilesInDirCommand, FileUri} from '../../src/types/all';
 var fs = require('fs-extra');
 var Chance = require('chance');
 
 // Where to store the generated file during the test.
-const testFolder = Uri.parse(`file:${workspace.rootPath}/types/temp/commandtype`);
+const testFolder = FileUri.fromString(`${workspace.rootPath}/types/temp/commandtype`);
 // Path to the predefined set of sample code files.
-const sampleFolder = Uri.parse(`file:${workspace.rootPath}/sample-code-files`);
+const sampleFolder = FileUri.fromString(`${workspace.rootPath}/sample-code-files`);
 // Length of generated file name.
 const LENGTH_OF_TODO_FILE = 5; 
 const chance = new Chance();
@@ -35,14 +35,14 @@ class SampleFile {
  * @param root  Parent directory.
  */
 function pathFromName(name: string, root = testFolder): string {
-  return Uri.parse(`file:${root.fsPath}/${name}`).fsPath;
+  return FileUri.fromString(`${root.getPath()}/${name}`).getPath();
 }
 
 /**
  * Randomly pick a file from a predefined set of samples.
  */
 function fileFromSample(): SampleFile {
-  let names = fs.readdirSync(sampleFolder.fsPath);
+  let names = fs.readdirSync(sampleFolder.getPath());
   let fullPath = [];
   for(let n of names) {
     fullPath.push(pathFromName(n, sampleFolder));
@@ -120,12 +120,12 @@ function createTodoFile(todoCount: number): string {
 }
 
 suite("Types - CommandType", function () { // do not use lambda here or timeout() won't work
-  this.timeout(5000);
+  this.timeout(15000);
   this.slow(5000);
   this.retries(2);
   
   suiteSetup(() => {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
   });
 
   /**
@@ -133,8 +133,8 @@ suite("Types - CommandType", function () { // do not use lambda here or timeout(
    */
   test("Current file has 0 TODO.", function (done) {
     const expect = 0;
-    let currentFile = Uri.parse("file:" + createTodoFile(expect));
-    commands.executeCommand("vscode.open", currentFile);
+    let currentFile = FileUri.fromString(createTodoFile(expect));
+    commands.executeCommand("vscode.open", currentFile.getUri());
     window.onDidChangeActiveTextEditor((editor) => {
       assert.ok(editor, "There is no active editor.");
 
@@ -152,8 +152,8 @@ suite("Types - CommandType", function () { // do not use lambda here or timeout(
 
   test("Current file has 100 TODOs.", function (done) {
     const expect = 100;
-    let currentFile = Uri.parse("file:" + createTodoFile(expect));
-    commands.executeCommand("vscode.open", currentFile);
+    let currentFile = FileUri.fromString(createTodoFile(expect));
+    commands.executeCommand("vscode.open", currentFile.getUri());
     window.onDidChangeActiveTextEditor((editor) => {
       assert.ok(editor, "There is no active editor.");
 
@@ -173,15 +173,15 @@ suite("Types - CommandType", function () { // do not use lambda here or timeout(
    * Generate some random files with a random number of TODOs in total
    */
   test("5 files have 0 TODO.", function (done) {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
 
     const expect = 0, fileCount = 5;
     let createdFiles = [];
     for (let i = 0; i < fileCount; ++i) {
-      createdFiles.push(Uri.parse("file:" + createTodoFile(expect)));
+      createdFiles.push(FileUri.fromString(createTodoFile(expect)));
     }
 
-    CommandHandler.handleWithParam(new ParseAllFilesInDirCommand(), testFolder.fsPath).then(
+    CommandHandler.handleWithParam(new ParseAllFilesInDirCommand(), testFolder.getPath()).then(
       (todoCount) => {
         assert.strictEqual(typeof todoCount, "number", "Error parsing, no result.");
         assert.equal(<number>todoCount, expect);
@@ -193,7 +193,7 @@ suite("Types - CommandType", function () { // do not use lambda here or timeout(
   });
 
   test("5 files have 10 TODOs.", function (done) {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
 
     const expect = 10, fileCount = 5;
     let remain = expect;
@@ -203,10 +203,10 @@ suite("Types - CommandType", function () { // do not use lambda here or timeout(
       if(i === fileCount - 1)
         pick = remain;
       remain -= pick;
-      createdFiles.push(Uri.parse("file:" + createTodoFile(pick)));
+      createdFiles.push(FileUri.fromString(createTodoFile(pick)));
     }
 
-    CommandHandler.handleWithParam(new ParseAllFilesInDirCommand(), testFolder.fsPath).then(
+    CommandHandler.handleWithParam(new ParseAllFilesInDirCommand(), testFolder.getPath()).then(
       (todoCount) => {
         assert.strictEqual(typeof todoCount, "number", "Error parsing, no result.");
         assert.equal(<number>todoCount, expect);

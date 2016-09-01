@@ -1,15 +1,15 @@
 import {Uri, workspace} from 'vscode';
 import * as assert from 'assert';
 import {FileReader} from '../../src/classes/all';
-import {FileType} from '../../src/types/all';
+import {FileType, FileUri} from '../../src/types/all';
 import {getFileExtension, getFolderName} from '../../src/utils/all';
 var fs = require('fs-extra');
 var Chance = require('chance');
 
 // Where to store the generated file during the test.
-const testFolder = Uri.parse(`file:${workspace.rootPath}/classes/temp/filereader`);
+const testFolder = FileUri.fromString(`${workspace.rootPath}/classes/temp/filereader`);
 // Path to the predefined set of sample code files.
-const sampleFolder = Uri.parse(`file:${workspace.rootPath}/sample-code-files`);
+const sampleFolder = FileUri.fromString(`${workspace.rootPath}/sample-code-files`);
 // Length of generated file name.
 const LENGTH_OF_TODO_FILE = 5; 
 const chance = new Chance();
@@ -39,22 +39,22 @@ type RandomFile = {
  * @param name  File name.
  * @param root  Parent directory.
  */
-function pathFromName(name: string, root = testFolder.fsPath): string {
-  return Uri.parse(`file:${root}/${name}`).fsPath;
+function pathFromName(name: string, root = testFolder.getPath()): string {
+  return FileUri.fromString(`${root}/${name}`).getPath();
 }
 
-function pathFromSubPath(subPath: string, root = testFolder.fsPath): string {
-  return Uri.parse(`file:${root}/${subPath}`).fsPath;
+function pathFromSubPath(subPath: string, root = testFolder.getPath()): string {
+  return FileUri.fromString(`${root}/${subPath}`).getPath();
 }
 
 /**
  * Randomly pick a file from a predefined set of samples.
  */
 function fileFromSample(): SampleFile {
-  let names = fs.readdirSync(sampleFolder.fsPath);
+  let names = fs.readdirSync(sampleFolder.getPath());
   let fullPath = [];
   for(let n of names) {
-    fullPath.push(pathFromName(n, sampleFolder.fsPath));
+    fullPath.push(pathFromName(n, sampleFolder.getPath()));
   }
   return new SampleFile(fullPath[(Math.random() * fullPath.length) | 1]);
 }
@@ -137,14 +137,14 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
   this.retries(2);
   
   suiteSetup(() => {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
   });
 
   /**
    * Create a random directory tree and distribute some random files in it.
    */
   test("0 file", function (done) {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
 
     const subPaths = randomInt(1, 5), fileCount = 0;
     let createdPaths = [], createdFiles = [];
@@ -161,7 +161,7 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
     }
     let found: FileType[] = [];
     FileReader.readProjectFilesInDir(
-      testFolder.fsPath,
+      testFolder.getPath(),
       (files: FileType[], progress, err) => {
         found = found.concat(files);
       },
@@ -174,7 +174,7 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
   });
 
   test("5 files", function (done) {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
 
     const subPaths = randomInt(1, 5), fileCount = 5;
     let createdPaths = [], createdFiles = [];
@@ -191,7 +191,7 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
     }
     let found: FileType[] = [];
     FileReader.readProjectFilesInDir(
-      testFolder.fsPath,
+      testFolder.getPath(),
       (files: FileType[], progress, err) => {
         found = found.concat(files);
       },
@@ -204,7 +204,7 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
   });
 
   test("5 files, deep directory tree.", function (done) {
-    clearDir(testFolder.fsPath);
+    clearDir(testFolder.getPath());
 
     const subPaths = randomInt(1, 10), fileCount = 5;
     let createdPaths = [], createdFiles = [];
@@ -221,7 +221,7 @@ suite("Classes - FileReader", function () { // do not use lambda here or timeout
     }
     let found: FileType[] = [];
     FileReader.readProjectFilesInDir(
-      testFolder.fsPath,
+      testFolder.getPath(),
       (files: FileType[], progress, err) => {
         found = found.concat(files);
       },

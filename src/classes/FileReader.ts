@@ -2,8 +2,9 @@ import {workspace, window, TextDocument, Uri, CancellationToken} from 'vscode';
 import {FileType} from '../types/all';
 import {UserSettings} from './UserSettings';
 import {Logger} from './Logger';
+import {FileFilter} from './FileFilter';
 import {READ_FILE_CHUNK_SIZE} from '../const/all';
-import {sliceArray, getFolderName} from '../utils/all';
+import {sliceArray, getFolderName, getFileExtension} from '../utils/all';
 var fs = require('fs');
 var path = require('path');
 
@@ -34,14 +35,19 @@ export class FileReader {
    * @param token     Token telling the method to stop.
    */
   static readProjectFiles(callback: ReadFilesCallback, finish: FinishCallback, token?: CancellationToken) {
-      let root = workspace.rootPath;
-      if (!root) {
+      let roots = UserSettings.getInstance().getExecutablePaths();
+      if(!roots)
+        roots = [workspace.rootPath];
+      if (!roots) {
         callback([], 0, "Cannot get root folder.");
         finish();
         return;
       }
 
-      let fileNames = FileReader.findFilesInPath(root);
+      let fileNames = [];
+      for(let r of roots) {
+        fileNames = fileNames.concat(FileReader.findFilesInPath(r));
+      }
       let slices = sliceArray(fileNames, READ_FILE_CHUNK_SIZE);
       FileReader.readFileLoop(slices, 0, callback, finish, token);
   }
@@ -84,11 +90,12 @@ export class FileReader {
   }
 
   /**
-   * Return files found in a directory.
+   * Return files found in a directory. Each item is a full path 
+   * of a file.
    * @param root  Find starting point.
    */
   private static findFilesInPath(root: string): string[] {
-    if (!fs.existsSync(root) || FileReader.isFolderExcluded(root)) { // path not exists
+    if (!fs.existsSync(root) || (root != workspace.rootPath && !UserSettings.getInstance().isFolderEligible(getFolderName(root)))) { // path not exists
       return [];
     }
 
@@ -101,7 +108,11 @@ export class FileReader {
         names = names.concat(FileReader.findFilesInPath(filename)); // go into sub-folder
       }
       else {
-        names.push(filename);
+        let ext = getFileExtension(filename);
+        // Check early to avoid triggering extension of excluded languages
+        if(UserSettings.getInstance().isFileEligible(ext)) {
+          names.push(filename);
+        }
       }
     }
     return names;
@@ -136,10 +147,5 @@ export class FileReader {
       if (uris_or_strings.length == 0)
         resolve(docs); // no URIs at all
     });
-  }
-
-  private static isFolderExcluded(folderName: string): boolean {
-    folderName = getFolderName(folderName);
-    return UserSettings.getInstance().FolderExclusions.contains(folderName);
   }
 }

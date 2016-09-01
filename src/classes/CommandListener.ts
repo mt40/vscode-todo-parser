@@ -15,6 +15,7 @@ export class CommandListener {
 
     let parseCurrentFileCommand = commands.registerCommand(PARSE_CURRENT_FILE_COMMAND, () => {
         callback(new ParseCurrentFileCommand());
+        callback(new UpdateStatusBarCommand());
     });
 
     let cancelParseAllFilesCommand = commands.registerCommand(CANCEL_PARSE_ALL_FILES_COMMAND, () => {

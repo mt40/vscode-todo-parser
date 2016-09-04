@@ -31,7 +31,8 @@ Parse TODOs in the project:
 - Press __F1__ > __Parse TODOs (all files)__.
 
 _Note that for large projects, the result will be displayed gradually. You can see the progress at the bottom (the bolt icon :zap:). **Clicking on it will cancel the task**._
-![progress](./images/progress.jpg "Progress")
+
+![progress](./images/progress.JPG "Progress")
 
 We support both single-line and multi-line comments. For example:
 

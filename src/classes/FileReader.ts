@@ -18,7 +18,7 @@ export class FileReader {
   static readCurrentFile(): Promise<FileType[]> {
     return new Promise(function (resolve, reject) {
       if(!window.activeTextEditor) {
-        reject("Failed to get active editor");
+        //reject("Failed to get active editor");
         return;
       }
       let doc = window.activeTextEditor.document;

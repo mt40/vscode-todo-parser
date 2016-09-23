@@ -1,3 +1,7 @@
+## 1.8.2
+- Remove 'reject' when fail to get the current editor. It happens too often and annoys other 
+extension developers.
+
 ## 1.8.1
 - Add *only* entry to configuration. This allows running only in some pre-defined directories.
 - Also update status bar count after running ParseCurrentFile command.

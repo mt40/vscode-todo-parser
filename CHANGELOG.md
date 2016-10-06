@@ -1,3 +1,6 @@
+## 1.8.3
+- Added 'PowerShell' and 'PHP' to the supported languages.
+
 ## 1.8.2
 - Remove 'reject' when fail to get the current editor. It happens too often and annoys other 
 extension developers.

@@ -52,6 +52,7 @@ export class LanguageName {
   static MARKDOWN     = new LanguageType("markdown", new RegexType(RG_JAVA));
   static PERL         = new LanguageType("perl", new RegexType(RG_PYTHON));
   static PLAINTEXT    = new LanguageType("plaintext", new RegexType(RG_JAVA));
+  static POWERSHELL   = new LanguageType("powershell", new RegexType(RG_PYTHON));
   static PYTHON       = new LanguageType("python", new RegexType(RG_PYTHON));
   static R            = new LanguageType("r", new RegexType(RG_PYTHON));
   static RUBY         = new LanguageType("ruby", new RegexType(RG_PYTHON));

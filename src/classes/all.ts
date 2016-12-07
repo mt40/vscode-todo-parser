@@ -5,6 +5,5 @@ export * from './FileReader';
 export * from './Parser';
 export * from './UserSettings';
 export * from './OutputWriter';
-export * from './OutputQuickPick';
 export * from './Logger';
 export * from './StatusBarManager';

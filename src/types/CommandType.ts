@@ -1,4 +1,4 @@
-import {FileReader, FileFilter, Parser, OutputWriter, OutputQuickPick, UserSettings, Logger, StatusBarManager} from '../classes/all';
+import {FileReader, FileFilter, Parser, OutputWriter, UserSettings, Logger, StatusBarManager} from '../classes/all';
 import {FileType} from './FileType';
 import {CancellationToken, CancellationTokenSource} from 'vscode';
 import {CHECKLIST_ICON, WORKING_ICON} from '../const/all';
@@ -24,10 +24,9 @@ export class ParseCurrentFileCommand implements CommandType {
         function (files: FileType[]) {
           files = FileFilter.filter(files);
           let todos = Parser.parse(files);
-          OutputQuickPick.begin();
-          OutputQuickPick.writeTodo(todos);
-          OutputQuickPick.finish(todos.length);
-          OutputQuickPick.showPanel(true);
+          OutputWriter.begin();
+          OutputWriter.writeTodo(todos);
+          OutputWriter.finish(todos.length);
           resolve(todos.length);
         },
         function (reason) {
@@ -41,7 +40,7 @@ export class ParseCurrentFileCommand implements CommandType {
 export class ParseAllFilesCommand implements CommandType {
   execute(): Promise<any> {
     return new Promise<any>(function (resolve, reject) {
-      OutputQuickPick.begin();
+      OutputWriter.begin();
       let totalFiles = 0;
       let results = [], errors = [];
       FileReader.readProjectFiles(
@@ -50,7 +49,7 @@ export class ParseAllFilesCommand implements CommandType {
             files = FileFilter.filter(files);
             let todos = Parser.parse(files);
             results = results.concat(todos);
-            OutputQuickPick.writeTodo(todos);
+            OutputWriter.writeTodo(todos);
             StatusBarManager.getInstance().setWorking(`${WORKING_ICON} ${progress}%`, "Click to cancel");
             totalFiles += todos.length;
           }
@@ -59,13 +58,12 @@ export class ParseAllFilesCommand implements CommandType {
           }
         },
         () => {
-          OutputQuickPick.finish(totalFiles);
+          OutputWriter.finish(totalFiles);
           StatusBarManager.getInstance().setDefault();
           if (UserSettings.getInstance().DevMode.getValue()) {
             for (let err of errors)
               Logger.error(err);
           }
-          OutputQuickPick.showPanel();
           resolve(totalFiles);
         },
         tokenSource.token);
@@ -76,7 +74,7 @@ export class ParseAllFilesCommand implements CommandType {
 export class ParseAllFilesInDirCommand {
   execute(root: string): Promise<any> {
     return new Promise<any>(function (resolve, reject) {
-      OutputQuickPick.begin();
+      OutputWriter.begin();
       let totalFiles = 0;
       let results = [], errors = [];
       FileReader.readProjectFilesInDir(
@@ -86,7 +84,7 @@ export class ParseAllFilesInDirCommand {
             files = FileFilter.filter(files);
             let todos = Parser.parse(files);
             results = results.concat(todos);
-            OutputQuickPick.writeTodo(todos);
+            OutputWriter.writeTodo(todos);
             StatusBarManager.getInstance().setWorking(`${WORKING_ICON} ${progress}%`, "Click to cancel");
             totalFiles += todos.length;
           }
@@ -95,13 +93,12 @@ export class ParseAllFilesInDirCommand {
           }
         },
         () => {
-          OutputQuickPick.finish(totalFiles);
+          OutputWriter.finish(totalFiles);
           StatusBarManager.getInstance().setDefault();
           if (UserSettings.getInstance().DevMode.getValue()) {
             for (let err of errors)
               Logger.error(err);
           }
-          OutputQuickPick.showPanel();
           resolve(totalFiles);
         },
         tokenSource.token);

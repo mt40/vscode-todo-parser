@@ -12,7 +12,7 @@ _Important note: This is a fork of kantlove's [vscode-todo-parser](https://githu
 
 Parse TODOs in your working files.
 
-![Demo](./images/demo_vscode1.2.gif "Demo")
+![Screenshot](./images/screenshot.jpg "Screenshot")
 
 ## Install
 

@@ -99,7 +99,8 @@ Contains the words that signal the start of TODOs. For example, `"markers": ["NO
 *Note that "TODO:", "Todo:", and "todo:" are added by default.*
 
 ## Supported languages
-Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script.
+Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl,
+Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script, Twig, Visual Basic.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

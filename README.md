@@ -1,4 +1,7 @@
 # VSCode TODO Parser Extension
+
+_Important note: This is a fork of kantlove's [vscode-todo-parser](https://github.com/kantlove/vscode-todo-parser/issues)_
+
 [![marketplace](https://vsmarketplacebadge.apphb.com/version-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 [![marketplace-installs](https://vsmarketplacebadge.apphb.com/installs-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 [![marketplace-rating](https://vsmarketplacebadge.apphb.com/rating-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
@@ -9,7 +12,7 @@
 
 Parse TODOs in your working files.
 
-![Demo](./images/demo_vscode1.2.gif "Demo")
+![Screenshot](./images/screenshot.jpg "Screenshot")
 
 ## Install
 
@@ -96,7 +99,8 @@ Contains the words that signal the start of TODOs. For example, `"markers": ["NO
 *Note that "TODO:", "Todo:", and "todo:" are added by default.*
 
 ## Supported languages
-Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script.
+Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl,
+Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script, Twig, Visual Basic.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

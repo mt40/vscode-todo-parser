@@ -1,4 +1,7 @@
 # VSCode TODO Parser Extension
+
+_Important note: This is a fork of kantlove's [vscode-todo-parser](https://github.com/kantlove/vscode-todo-parser/issues)_
+
 [![marketplace](https://vsmarketplacebadge.apphb.com/version-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 [![marketplace-installs](https://vsmarketplacebadge.apphb.com/installs-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 [![marketplace-rating](https://vsmarketplacebadge.apphb.com/rating-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)

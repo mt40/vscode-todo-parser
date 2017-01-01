@@ -1,5 +1,6 @@
 ## 1.8.4
 - Add a new settings entry 'autoDefaultMarkers'.
+- Add support for Twig and Visual Basic.
 
 ## 1.8.3
 - Added 'PowerShell' and 'PHP' to the supported languages.

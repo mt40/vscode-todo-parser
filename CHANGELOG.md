@@ -1,3 +1,6 @@
+## 1.8.4
+- Add a new settings entry 'autoDefaultMarkers'.
+
 ## 1.8.3
 - Added 'PowerShell' and 'PHP' to the supported languages.
 

@@ -57,7 +57,8 @@ Include the below snippet in your __User Settings__ (File > Preferences > User S
   "include": ["js"],
   "folderExclude": ["node_modules", ".vscode"],
   "only": ["sub-folder/sub-sub-folder"],
-  "markers": ["NOTE:", "REMINDER:"]
+  "markers": ["NOTE:", "REMINDER:"],
+  "autoDefaultMarkers": true
 }
 ```
 #### exclude
@@ -91,9 +92,12 @@ root
 ```
 
 #### markers
-Contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`. 
+Contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`.
 
-*Note that "TODO:", "Todo:", and "todo:" are added by default.*
+
+#### autoDefaultMarkers
+If `true`, automatically add the default markers: "TODO", "Todo", and "todo". Default is `true`.
+
 
 ## Supported languages
 Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl, Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script.

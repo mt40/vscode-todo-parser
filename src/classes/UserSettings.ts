@@ -20,9 +20,12 @@ export class UserSettings {
   Only = new SetSettingEntry("only", []);
   
   // TODO beginning signal
-  Markers = new MarkersSettingEntry("markers", ['TODO:', 'Todo:', 'todo:']);
+  Markers = new MarkersSettingEntry("markers", []);
+  // Whether default markers (e.g. todo, TODO) are added automatically
+  AutoAddDefaultMarkers = new ToggleSettingEntry("autoDefaultMarkers", true);
+
   // Turn on/off dev mode
-  DevMode = new DevModeSettingEntry("devMode", false);
+  DevMode = new ToggleSettingEntry("devMode", false);
 
   constructor() {
     if (!UserSettings.instance) {
@@ -42,7 +45,7 @@ export class UserSettings {
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.Only, this.DevMode];
+    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.Only, this.AutoAddDefaultMarkers, this.DevMode];
 
     if (settings) {
       for (let st of toLoad) {
@@ -105,6 +108,10 @@ export class UserSettings {
     if(this.Inclusions.size() > 0) {
       this.Exclusions.setValue([]);
     }
+
+    if(this.AutoAddDefaultMarkers.getValue()) {
+      this.Markers.setValue(this.Markers.getValue().concat(['TODO:', 'Todo:', 'todo:']));
+    }
   }
 }
 
@@ -129,7 +136,7 @@ abstract class SettingEntry<T> {
 
   setValue(value: any): boolean {
     this.value = this.defaultValue;
-    if (value && <T>value) { // check for undefine and type compatibility
+    if (value != null && <T>value != null) { // check for undefine and type compatibility
       this.value = <T>value;
       return true;
     }
@@ -176,5 +183,5 @@ export class MarkersSettingEntry extends SetSettingEntry<string[]> {
   }
 }
 
-export class DevModeSettingEntry extends SettingEntry<boolean> {
+export class ToggleSettingEntry extends SettingEntry<boolean> {
 }

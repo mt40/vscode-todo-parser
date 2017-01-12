@@ -41,4 +41,3 @@ export class TodoType {
     return this.getFile().toString() + "\n" + this.getContent.toString();
   }
 }
-// Todo: lol

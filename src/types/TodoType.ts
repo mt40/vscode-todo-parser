@@ -27,10 +27,9 @@ export class TodoType {
 
   getDisplayString(): string {
     let url = this.getFile().data.uri.toString();
-    let middle = "#"
-    // account for untitled files
+    let middle = "#";
     if (url.split(":")[0].toString() == "untitled") {
-        middle = "; Line Number: "
+        middle = "; Line Number: ";
     }
     let path = url + middle + this.getLineNumber().toString();
     return `From ${path}\n----------------------------------\n${this.getContent()}`;

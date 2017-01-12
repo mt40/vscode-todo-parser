@@ -33,11 +33,11 @@ export class TodoType {
     if (url.split(":")[0].toString() == "untitled") {
         middle = "; Line Number: ";
     }
-    let path = url + middle + this.getLineNumber().toString();
+    let path = url + middle + this.getLineNumber();
     return `From ${path}\n----------------------------------\n${this.getContent()}`;
   }
 
   toString(): string {
-    return this.getFile().toString() + "\n" + this.getContent.toString();
+    return this.getFile() + "\n" + this.getContent;
   }
 }

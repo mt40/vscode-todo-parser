@@ -26,11 +26,18 @@ export class TodoType {
   }
 
   getDisplayString(): string {
-    let path = `${this.getFile().getName()}:${this.getLineNumber()}`;
+    let url = this.getFile().getFile().uri.toString();
+    // to take it to the properline
+    let middle = "#";
+    // what if the file is not saved?
+    if (url.split(":")[0].toString() == "untitled") {
+        middle = "; Line Number: ";
+    }
+    let path = url + middle + this.getLineNumber();
     return `From ${path}\n----------------------------------\n${this.getContent()}`;
   }
 
   toString(): string {
-    return this.getFile().toString() + "\n" + this.getContent.toString();
+    return this.getFile() + "\n" + this.getContent;
   }
 }

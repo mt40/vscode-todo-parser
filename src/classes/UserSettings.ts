@@ -110,7 +110,7 @@ export class UserSettings {
     }
 
     if(this.AutoAddDefaultMarkers.getValue()) {
-      this.Markers.setValue(this.Markers.getValue().concat(['TODO:', 'Todo:', 'todo:']));
+      this.Markers.setValue(this.Markers.getValue().concat(['TODO']));
     }
   }
 }

@@ -96,7 +96,7 @@ Contains the words that signal the start of TODOs. For example, `"markers": ["NO
 
 
 #### autoDefaultMarkers
-If `true`, automatically add the default markers: "TODO", "Todo", and "todo". Default is `true`.
+If `true`, automatically add the default "TODO" marker. Default is `true`.
 
 
 ## Supported languages

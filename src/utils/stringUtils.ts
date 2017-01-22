@@ -64,7 +64,11 @@ export function getFolderName(path: string): string {
  */
 export function startsWithOne(str: string, prefixes: string[]): boolean {
   for (let p of prefixes) {
-    if ((new RegExp('\\b'+p+'\\b','i')).test(str))
+    if (/\w/.test(p[0]))
+      p = '\\b' + p;
+    if (/\w/.test(p.slice(-1)))
+      p = p + '\\b';
+    if ((new RegExp(p, 'i')).test(str))
       return true;
   }
   return false;

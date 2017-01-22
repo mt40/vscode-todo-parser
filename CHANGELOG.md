@@ -1,3 +1,10 @@
+## 1.8.6
+- Fix issue 36: detect TODO at the end of a code line.
+- Fix issue 44: other languages not work well with the default markers.
+
+## 1.8.5
+- Fix issue 41: cannot click on the link in a TODO item.
+
 ## 1.8.4
 - Add a new settings entry 'autoDefaultMarkers'.
 - Add support for Twig and Visual Basic.

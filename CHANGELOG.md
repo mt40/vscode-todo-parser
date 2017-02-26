@@ -1,3 +1,6 @@
+## 1.8.7
+- Add support for Matlab.
+
 ## 1.8.6
 - Fix issue 36: detect TODO at the end of a code line.
 - Fix issue 44: other languages not work well with the default markers.

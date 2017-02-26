@@ -101,7 +101,7 @@ If `true`, automatically add the default "TODO" marker. Default is `true`.
 
 ## Supported languages
 Java, Javascript, C#, C, C++, F#, Python, Ruby, Coffee Script, R, Haskell, Lua, Go, Perl,
-Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script, Twig, Visual Basic.
+Markdown, Css, Scss, Less, Latex, Typescript, Elixir, Shell Script, Twig, Visual Basic, Matlab.
 
 *Note that multi-line comment style is only supported in languages that have the syntax in the example.*
 

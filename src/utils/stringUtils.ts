@@ -68,7 +68,7 @@ export function startsWithOne(str: string, prefixes: string[]): boolean {
       p = '\\b' + p;
     if (/\w/.test(p.slice(-1)))
       p = p + '\\b';
-    if ((new RegExp(p, 'i')).test(str))
+    if ((new RegExp('^' + p, 'i')).test(str))
       return true;
   }
   return false;

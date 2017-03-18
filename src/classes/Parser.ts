@@ -114,9 +114,9 @@ export class Parser {
    */
   private static cleanString(str: string): string {
     let no_space = str.trim();
-    let no_leading_slash = no_space.replace(/\/+/, '');
-    let no_leading_asterisk = no_leading_slash.replace(/\*+/g, '');
-    no_leading_asterisk = no_leading_asterisk.replace(/\/+/, ''); // remove slash again!
+    let no_leading_slash = no_space.replace(/^\/+/, '');
+    let no_leading_asterisk = no_leading_slash.replace(/^\*+/g, '');
+    no_leading_asterisk = no_leading_asterisk.replace(/^\/+/, ''); // remove slash again!
     str = no_leading_asterisk.trim();
     return str;
   }

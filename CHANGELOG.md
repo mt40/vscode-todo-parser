@@ -1,3 +1,6 @@
+## 1.8.8
+- Fix a bug where asterisk(*) and slash(/) are removed even if they are in the middle of a string.
+
 ## 1.8.7
 - Add support for Matlab.
 

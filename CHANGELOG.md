@@ -1,3 +1,6 @@
+## 1.8.9
+- Fix issue 52: marker must be at the beginning of a string.
+
 ## 1.8.8
 - Fix a bug where asterisk(*) and slash(/) are removed even if they are in the middle of a string.
 

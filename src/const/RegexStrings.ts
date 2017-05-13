@@ -1,4 +1,4 @@
-export const RG_JAVA = "/\\*([\\s\\S]*?)\\*/|//([^\\r\\n]+)";
+export const RG_JAVA = "/\\*+([\\s\\S]*?)\\*/|//([^\\r\\n]+)";
 export const RG_PYTHON = "#\\s*(.+)";
 export const RG_ADA = "--\\s*(.+)";
 export const RG_FSHARP = "\\(\\*([\\s\\S]*?)\\*\\)|//([^\\r\\n]+)";

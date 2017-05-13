@@ -1,3 +1,6 @@
+## 1.8.10
+- Fix JAVA regex string for matching multi-line comments (related issues: #58, #60).
+
 ## 1.8.9
 - Fix issue 52: marker must be at the beginning of a string.
 

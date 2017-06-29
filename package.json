@@ -45,7 +45,13 @@
       "properties": {
         "TodoParser": {
           "type": "object",
-          "description": "Configurations for the extension."
+          "description": "Configurations for the extension.",
+          "properties": {
+            "showInProblems": {
+              "type": "boolean",
+              "description": "If true, show TODO comments in Problems panel."
+            }
+          }
         }
       }
     }

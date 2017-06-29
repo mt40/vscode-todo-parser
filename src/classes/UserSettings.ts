@@ -24,6 +24,9 @@ export class UserSettings {
   // Whether default markers (e.g. todo, TODO) are added automatically
   AutoAddDefaultMarkers = new ToggleSettingEntry("autoDefaultMarkers", true);
 
+  // Show in problems panel?
+  ShowInProblems = new ToggleSettingEntry("showInProblems", false);
+
   // Turn on/off dev mode
   DevMode = new ToggleSettingEntry("devMode", false);
 
@@ -45,7 +48,7 @@ export class UserSettings {
    */
   reload() {
     let settings = workspace.getConfiguration(this.SETTING_ROOT_ENTRY);
-    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.Only, this.AutoAddDefaultMarkers, this.DevMode];
+    let toLoad = [this.Exclusions, this.Inclusions, this.Markers, this.FolderExclusions, this.Only, this.AutoAddDefaultMarkers, this.ShowInProblems, this.DevMode];
 
     if (settings) {
       for (let st of toLoad) {

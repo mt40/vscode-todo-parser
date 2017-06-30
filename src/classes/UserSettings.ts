@@ -1,4 +1,4 @@
-import {workspace, Uri} from 'vscode';
+import {workspace, Uri, DiagnosticSeverity} from 'vscode';
 import {UnsupportFiles} from '../const/all';
 import {FileUri} from '../types/all';
 
@@ -175,14 +175,54 @@ export class SetSettingEntry<T extends Array<any>> extends SettingEntry<T> {
   }
 }
 
+type MarkerSettingTuple = [string, string | number];
+type MarkerType = Array<string|MarkerSettingTuple>;
+
 export class MarkersSettingEntry extends SetSettingEntry<string[]> {
-  setValue(value: string[]): boolean {
+  private DEFAULT_SEVERITY = DiagnosticSeverity.Hint;
+  private priorities: {[index: string]: number} = {};
+
+  setValue(value: MarkerType): boolean {
+    this.priorities = {};
+
+    // Go through each settings item to build a dictionary of (marker, priority) pairs.
+    for (let item of value) {
+      if (item instanceof Array) {
+        this.priorities[item[0]] = this.parsePriority(item[1]);
+      }
+      else if (!this.priorities[item]) {
+        this.priorities[item] = this.DEFAULT_SEVERITY;
+      }
+    }
+
     if (super.setValue(value)) {
       this.value = this.defaultValue.concat(this.value);
+      // TODO: `ensureUnique` should maybe be overriden. 
+      // "['TODO', 'Warning']" and "TODO" entries are considered distinct members, 
+      // but they both refer to the same marker.
       this.ensureUnique();
       return true;
     }
     return false;
+  }
+
+  getMarkers(): string[] {
+    return Object.keys(this.priorities);
+  }
+
+  getPriorityOf(marker: string): number {
+    return this.priorities[marker];
+  }
+
+  private parsePriority(priority: (string | number)): number {
+    if (typeof (priority) === "number") {
+      // Clamp the priority to DiagnosticSeverity range (0-3)
+      return Math.min(Math.max(priority, DiagnosticSeverity.Error), DiagnosticSeverity.Hint);
+    }
+    else {
+      let value = DiagnosticSeverity[priority];
+      return value ? value : this.DEFAULT_SEVERITY;
+    }
   }
 }
 

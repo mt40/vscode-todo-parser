@@ -14,7 +14,7 @@ export class Parser {
   private static parseSingleFile(file: FileType): TodoType[] {
     let todos = [];
     let regex = file.getLanguage().getRegex();
-    let blocks: Array<[string, number]> = [[file.getFile().getText(), 0]]; // an item = [text, line number]
+    let blocks: Array<[string, number, string]> = [[file.getFile().getText(), 0, ""]]; // an item = [text, line number, marker]
     
     if(!blocks[0])
       return todos;
@@ -28,7 +28,7 @@ export class Parser {
     }
 
     for(let todo of blocks) {
-      let item = new TodoType(file, todo[0], todo[1]);
+      let item = new TodoType(file, todo[0], todo[1], todo[2]);
       todos.push(item);
     }
     return todos;
@@ -36,9 +36,9 @@ export class Parser {
 
   /**
    * Match text by a regex string
-   * @return An array of tuple. Each tuple is [matched text, line number]
+   * @return An array of tuples. Each tuple is [matched text, line number, marker]
    */
-  private static matchText(block: [string, number], regex: RegExp): [string, number][] {
+  private static matchText(block: [string, number], regex: RegExp): [string, number, string][] {
     let text = block[0], line = block[1];
     let matches = [];
     let lineIndex = Parser.computeIndexList(text.split("\n"));
@@ -46,13 +46,14 @@ export class Parser {
 
     try {
       while (match = regex.exec(text)) {
+        let marker = "";
         let matched_text = (match[1]) ? match[1] : match[0];
-        matched_text = this.refine(matched_text);
+        [matched_text, marker] = this.refine(matched_text);
         if (!matched_text) { // there is no todo
           continue;
         }
         let lineNumber = Parser.lineNumberFromIndex(lineIndex, match.index);
-        matches.push([matched_text, lineNumber]);
+        matches.push([matched_text, lineNumber, marker]);
       }
     }
     catch (e) {
@@ -86,25 +87,32 @@ export class Parser {
 
   /**
    * A comment may contain non-todo lines. Remove those lines.
+   * 
+   * @returns {[string, string]} A tuple containing [todo text, marker].
    */
-  private static refine(str: string): string {
+  private static refine(str: string): [string, string] {
     str = this.cleanString(str);
-    let markers = UserSettings.getInstance().Markers.getValue();
+    let markers = UserSettings.getInstance().Markers.getMarkers();
+    let marker = "";
     let lines = str.split('\n');
     let todoLines = [];
-    let flag = false;
 
     for (let ln of lines) {
       ln = ln.trim();
-      if (flag && !ln) { // empty line = end of todo
+      if (marker && !ln) { // empty line = end of todo
         break;
       }
-      if (flag || startsWithOne(ln, markers)) {
-        flag = true; // signal inside a todo
+
+     if(!marker) {
+       [, marker] = startsWithOne(ln, markers);
+     } 
+
+      if (marker) {
         todoLines.push(ln);
       }
     }
-    return todoLines.join("\n");
+
+    return [todoLines.join("\n"), marker];
   }
 
   /**

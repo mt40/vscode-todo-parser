@@ -1,4 +1,4 @@
-import {window, languages, OutputChannel, Diagnostic, DiagnosticSeverity, Range, StatusBarItem, StatusBarAlignment} from 'vscode';
+import {window, languages, OutputChannel, Diagnostic, Range, StatusBarItem, StatusBarAlignment} from 'vscode';
 import {UserSettings} from './UserSettings';
 import {TodoType} from '../types/all';
 import {CHANNEL_NAME} from '../const/all';
@@ -57,7 +57,6 @@ export class OutputWriter {
    * when writing is done.
    * @param todos List of todos to be written to the panel.
    */
-  // TODO: Just a test
   static writeTodo(todos: TodoType[]) {
     assert(OutputWriter.state === State.Begin || OutputWriter.state === State.Busy, "begin() is not called.");
     OutputWriter.state = State.Busy;    
@@ -80,8 +79,7 @@ export class OutputWriter {
           diags.push(new Diagnostic(
             new Range(todo.getLineNumber() - 1, 0, todo.getLineNumber() - 1, Number.MAX_VALUE), 
             todo.getContent(), 
-            // TODO: determineSeverity() -> severity[marker] dict
-            DiagnosticSeverity.Hint
+            todo.getSeverity()
           ));
 
           diagnostics.set(fileUri, diags);

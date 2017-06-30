@@ -185,6 +185,9 @@ export class MarkersSettingEntry extends SetSettingEntry<string[]> {
   setValue(value: MarkerType): boolean {
     this.priorities = {};
 
+    // If value is undefined or null, make our lives easier and set it to an empty array
+    if(!value) { value = []; }
+
     // Go through each settings item to build a dictionary of (marker, priority) pairs.
     for (let item of value) {
       if (item instanceof Array) {

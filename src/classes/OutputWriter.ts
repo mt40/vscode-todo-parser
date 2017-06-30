@@ -50,6 +50,11 @@ export class OutputWriter {
     }
 
     OutputWriter.state = State.Idle;
+
+    // TODO: We should show the Problems panel here, if the 'showInProblems' setting is set to true,
+    // but VS Code Extension API currently doesn't allow us to do that. However, this feature is
+    // coming in one of the upcoming updates. 
+    // See issue for details: https://github.com/Microsoft/vscode/issues/11399.
   }
 
   /**

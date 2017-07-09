@@ -7,6 +7,10 @@
 [![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)](https://travis-ci.org/kantlove/vscode-todo-parser)
 [![GitHub](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
 
+*GUYS, I'M SORRY FOR THE SLOW RESPONSE AND MAINTAINANCE*
+
+*Sometimes it is the job that you want prevents you from working on the project that you nurture :(*
+
 Parse TODOs in your working files.
 
 ![Demo](./images/demo_vscode1.2.gif "Demo")

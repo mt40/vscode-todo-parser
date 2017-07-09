@@ -57,7 +57,8 @@ Include the below snippet in your __User Settings__ (File > Preferences > User S
   "include": ["js"],
   "folderExclude": ["node_modules", ".vscode"],
   "only": ["sub-folder/sub-sub-folder"],
-  "markers": ["NOTE:", "REMINDER:"],
+  "showInProblems": false,
+  "markers": ["NOTE:", "REMINDER:", ["FIXME", "Warning"]],
   "autoDefaultMarkers": true
 }
 ```
@@ -91,8 +92,23 @@ root
 }
 ```
 
+#### showInProblems
+If `true`, show the results in the Problems panel instead of the Output panel.
+
 #### markers
-Contains the words that signal the start of TODOs. For example, `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`.
+Contains the words that signal the start of TODOs. It can contain either strings, or tuples of [marker string, priority] pairs.
+
+Priority can be either of these strings (sorted by severity, lowest to highest):
+
+* `"Hint"`
+* `"Information"`
+* `"Warning"`
+* `"Error"`
+
+Example usage:
+
+* `"markers": ["NOTE:"]` will enable matching `NOTE: this is a new type of TODO`.
+* `"markers": [ ["FIXME:", "Warning"] ]` will enable matching `FIXME: This is important` and will mark it as a warning in the Problems panel.
 
 
 #### autoDefaultMarkers

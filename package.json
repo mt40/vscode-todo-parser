@@ -45,7 +45,36 @@
       "properties": {
         "TodoParser": {
           "type": "object",
-          "description": "Configurations for the extension."
+          "description": "Configurations for the extension.",
+          "properties": {
+            "markers": {
+              "type": "array",
+              "description": "An array of words that signal the start of TODOs, or tuples containig the words and their priorities.",
+              "items": {
+                "type": ["string", "array"],
+                "description": "Word that signals the start of a TODO comment, or a tuple of the word and comment priority.",
+                "items": [
+                  {
+                    "type": "string",
+                    "description": "Word that signals the start of a TODO comment."
+                  },
+                  {
+                    "enum": [
+                      "Error", 0,
+                      "Warning", 1,
+                      "Information", 2,
+                      "Hint", 3
+                    ],
+                    "description": "The priority level of the TODO comment. Determines how the TODO item is rendered in the Problems panel"
+                  }
+                ]
+              }
+            },
+            "showInProblems": {
+              "type": "boolean",
+              "description": "If true, show TODO comments in Problems panel."
+            }
+          }
         }
       }
     }

@@ -61,15 +61,16 @@ export function getFolderName(path: string): string {
  * prefixes and false otherwise.
  * @param str       String to be checked.
  * @param prefixes  A list of prefixes.
+ * @returns {[boolean, string]}  A tuple of whether a match is found (boolean) and the matched prefix.
  */
-export function startsWithOne(str: string, prefixes: string[]): boolean {
+export function startsWithOne(str: string, prefixes: string[]): [boolean, string] {
   for (let p of prefixes) {
     if (/\w/.test(p[0]))
       p = '\\b' + p;
     if (/\w/.test(p.slice(-1)))
       p = p + '\\b';
     if ((new RegExp('^' + p, 'i')).test(str))
-      return true;
+      return [true, p.replace(/\\b/g, '')];
   }
-  return false;
+  return [false, null];
 }

@@ -1,4 +1,5 @@
-import {window, OutputChannel, StatusBarItem, StatusBarAlignment} from 'vscode';
+import {window, languages, OutputChannel, Diagnostic, Range, StatusBarItem, StatusBarAlignment} from 'vscode';
+import {UserSettings} from './UserSettings';
 import {TodoType} from '../types/all';
 import {CHANNEL_NAME} from '../const/all';
 import assert = require('assert');
@@ -49,6 +50,11 @@ export class OutputWriter {
     }
 
     OutputWriter.state = State.Idle;
+
+    // TODO: We should show the Problems panel here, if the 'showInProblems' setting is set to true,
+    // but VS Code Extension API currently doesn't allow us to do that. However, this feature is
+    // coming in one of the upcoming updates. 
+    // See issue for details: https://github.com/Microsoft/vscode/issues/11399.
   }
 
   /**
@@ -64,11 +70,36 @@ export class OutputWriter {
       return;
     let channel = OutputWriter.outputChannel;
 
+    const showInProblems = UserSettings.getInstance().ShowInProblems.getValue();
+
+    let diagnostics = showInProblems ? languages.createDiagnosticCollection("TODOs") : null;
+
     for (let todo of todos) {
-      channel.appendLine(`${OutputWriter.lineIndex}.`);
-      channel.appendLine(todo.getDisplayString());
-      channel.appendLine('');
-      OutputWriter.lineIndex++;
+      if (showInProblems) {
+        try {
+          let fileUri = todo.getFile().getFile().uri;
+          let prevDiagnostics = diagnostics.get(fileUri) || [];
+          // The array returned by `diagnostics.get` is read-only, so we make a shallow copy
+          let diags = [].concat(prevDiagnostics);
+          diags.push(new Diagnostic(
+            new Range(todo.getLineNumber() - 1, 0, todo.getLineNumber() - 1, Number.MAX_VALUE), 
+            todo.getContent(), 
+            todo.getSeverity()
+          ));
+
+          diagnostics.set(fileUri, diags);
+        }
+        catch (err) {
+          channel.appendLine('Error writing todos: ' + err);
+          OutputWriter.lineIndex++;
+        }
+      }
+      else {
+        channel.appendLine(`${OutputWriter.lineIndex}.`);
+        channel.appendLine(todo.getDisplayString());
+        channel.appendLine('');
+        OutputWriter.lineIndex++;
+      }
     }
   }
 

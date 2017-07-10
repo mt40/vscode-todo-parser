@@ -99,6 +99,7 @@ export class FileReader {
       return [];
     }
 
+    // TODO: Try using workspace.findFiles(...) instead of node fs methods
     let files = fs.readdirSync(root);
     let names = [];
     for (let i = 0; i < files.length; i++) {
@@ -125,7 +126,12 @@ export class FileReader {
   private static readFileFromNames(uris_or_strings): Promise<FileType[]> {
     return new Promise(function (resolve, reject) {
       let docs: FileType[] = [];
-      let count = 0;
+      // Count of successfully opened files
+      let openedCount = 0;
+      // Count of files which failed to load
+      let failedCount = 0;
+
+      function totalCount() { return openedCount + failedCount; }
 
       for (let uri of uris_or_strings) {
         let docPrm = workspace.openTextDocument(uri);
@@ -134,14 +140,23 @@ export class FileReader {
             if(doc) // File maybe corrupted
               docs.push(new FileType(doc));
 
-            count++;
+            openedCount++;
             // Detect and end the function early
-            if (count == uris_or_strings.length) {
+            if (totalCount() == uris_or_strings.length) {
               resolve(docs);
             }
           },
           function (reason) {
-            reject(reason);
+            // Keep going, try other files.
+            failedCount++;
+            // Detect and end the function early
+            if (failedCount == uris_or_strings.length) {
+              // All files failed to open, so we reject
+              reject("No file has been read successfully.");
+            }
+            else if (totalCount() == uris_or_strings.length) {
+              resolve(docs);
+            }
           });
       }
       if (uris_or_strings.length == 0)

@@ -45,7 +45,7 @@ export class ParseAllFilesCommand implements CommandType {
       let results = [], errors = [];
       FileReader.readProjectFiles(
         (files: FileType[], progress, error) => {
-          if (!error) {
+          if (files.length > 0) {
             files = FileFilter.filter(files);
             let todos = Parser.parse(files);
             results = results.concat(todos);
@@ -53,7 +53,9 @@ export class ParseAllFilesCommand implements CommandType {
             StatusBarManager.getInstance().setWorking(`${WORKING_ICON} ${progress}%`, "Click to cancel");
             totalFiles += todos.length;
           }
-          else {
+          // We could have files available, but still have an error
+          // because some of them failed to load.
+          if (error) {
             errors.push(error);
           }
         },

@@ -220,10 +220,10 @@ export class MarkersSettingEntry extends SetSettingEntry<string[]> {
   private parsePriority(priority: (string | number)): number {
     if (typeof (priority) === "number") {
       // Clamp the priority to DiagnosticSeverity range (0-3)
-      return Math.min(Math.max(priority, DiagnosticSeverity.Error), DiagnosticSeverity.Hint);
+      return Math.min(Math.max(<number>priority, DiagnosticSeverity.Error), DiagnosticSeverity.Hint);
     }
     else {
-      let value = DiagnosticSeverity[priority];
+      let value = DiagnosticSeverity[<string>priority];
       return value ? value : this.DEFAULT_SEVERITY;
     }
   }

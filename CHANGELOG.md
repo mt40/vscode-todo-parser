@@ -1,3 +1,8 @@
+## 1.9.0
+- Add option to show TODOs in PROBLEMS panel of VSCode instead. (from #65)
+- When reading, does not reject all files in batch whenever a file failed to load. (from #66)
+Thanks to @peacegiverman for both pull requests :+1
+
 ## 1.8.10
 - Fix JAVA regex string for matching multi-line comments (related issues: #58, #60).
 

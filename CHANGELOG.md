@@ -1,3 +1,6 @@
+## 1.9.1
+- Fix issue 68: the extension still outputs to Output Panel when the setting `showInProblems` is enabled.
+
 ## 1.9.0
 - Add option to show TODOs in PROBLEMS panel of VSCode instead. (from #65)
 - When reading, does not reject all files in batch whenever a file failed to load. (from #66)

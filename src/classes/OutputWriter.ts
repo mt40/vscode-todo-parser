@@ -40,13 +40,17 @@ export class OutputWriter {
   static finish(todoCount: number) {
     assert(OutputWriter.state === State.Busy, "There is no work to finish.");
 
+    const showInProblems = UserSettings.getInstance().ShowInProblems.getValue();
+
     let channel = OutputWriter.outputChannel;    
-    if (todoCount == 0)
-      channel.appendLine('No TODOs found.');
-    else {
-      channel.appendLine('==================================');
-      let unit = (todoCount > 1) ? 'TODOs' : 'TODO';
-      channel.appendLine(`Found ${todoCount} ${unit}.\n`);
+    if(!showInProblems) {
+      if (todoCount == 0)
+        channel.appendLine('No TODOs found.');
+      else {
+        channel.appendLine('==================================');
+        let unit = (todoCount > 1) ? 'TODOs' : 'TODO';
+        channel.appendLine(`Found ${todoCount} ${unit}.\n`);
+      }
     }
 
     OutputWriter.state = State.Idle;
@@ -104,8 +108,10 @@ export class OutputWriter {
   }
 
   private static showPanel() {
+    const showInProblems = UserSettings.getInstance().ShowInProblems.getValue();
     let channel = OutputWriter.outputChannel;
-    if(OutputWriter.state === State.Idle) {
+
+    if(!showInProblems && OutputWriter.state === State.Idle) {
       channel.clear();
       channel.show(true);
     }

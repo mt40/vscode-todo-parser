@@ -1,6 +1,6 @@
 import {Dictionary, hashCode} from '../utils/all';
 import {RegexType} from './RegexType';
-import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX, RG_VB, RG_TWIG} from '../const/all';
+import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX, RG_VB, RG_TWIG, RG_TERRAFORM} from '../const/all';
 
 var map = new Dictionary<string, LanguageType>();
 
@@ -34,7 +34,6 @@ export class LanguageType {
   }
 }
 
-// 19 languages
 export class LanguageName {
   static ADA          = new LanguageType("ada", new RegexType(RG_ADA));
   static C            = new LanguageType("c", new RegexType(RG_JAVA));
@@ -58,6 +57,7 @@ export class LanguageName {
   static R            = new LanguageType("r", new RegexType(RG_PYTHON));
   static RUBY         = new LanguageType("ruby", new RegexType(RG_PYTHON));
   static SASS         = new LanguageType("sass", new RegexType(RG_JAVA));
+  static TERRAFORM    = new LanguageType("terraform", new RegexType(RG_TERRAFORM));
   static TYPESCRIPT   = new LanguageType("typescript", new RegexType(RG_JAVA));
   static ELIXIR       = new LanguageType("elixir", new RegexType(RG_PYTHON));
   static BASH         = new LanguageType("shellscript", new RegexType(RG_PYTHON));

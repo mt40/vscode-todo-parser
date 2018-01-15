@@ -62,6 +62,7 @@ export class LanguageName {
   static ELIXIR       = new LanguageType("elixir", new RegexType(RG_PYTHON));
   static BASH         = new LanguageType("shellscript", new RegexType(RG_PYTHON));
   static VB           = new LanguageType("vb", new RegexType(RG_VB));
-  static TWIG           = new LanguageType("twig", new RegexType(RG_TWIG));
+  static TWIG         = new LanguageType("twig", new RegexType(RG_TWIG));
+  static YAML         = new LanguageType("yaml", new RegexType(RG_PYTHON));
   static MATLAB       = new LanguageType("matlab", new RegexType(RG_LATEX));
 }

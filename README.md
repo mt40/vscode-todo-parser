@@ -3,9 +3,9 @@
 [![marketplace-installs](https://vsmarketplacebadge.apphb.com/installs-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 [![marketplace-rating](https://vsmarketplacebadge.apphb.com/rating-short/minhthai.vscode-todo-parser.svg)](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser)
 
-[![GitHub issues](https://img.shields.io/github/issues/kantlove/vscode-todo-parser.svg)](https://github.com/kantlove/vscode-todo-parser/issues)
-[![Travis](https://travis-ci.org/kantlove/vscode-todo-parser.svg?branch=master)](https://travis-ci.org/kantlove/vscode-todo-parser)
-[![GitHub](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/kantlove/vscode-todo-parser)
+[![GitHub issues](https://img.shields.io/github/issues/mt40/vscode-todo-parser.svg)](https://github.com/mt40/vscode-todo-parser/issues)
+[![Travis](https://travis-ci.org/mt40/vscode-todo-parser.svg?branch=master)](https://travis-ci.org/mt40/vscode-todo-parser)
+[![GitHub](https://img.shields.io/badge/github-view%20source-blue.svg?style=social)](https://github.com/mt40/vscode-todo-parser)
 
 *GUYS, I'M SORRY FOR THE SLOW RESPONSE AND MAINTAINANCE*
 
@@ -18,7 +18,7 @@ Parse TODOs in your working files.
 ## Install
 
 - Visit the Market [here](https://marketplace.visualstudio.com/items?itemName=minhthai.vscode-todo-parser).
-- Or open VSCode, press **F1** then type this command `ext install vscode-todo-parser`. Press **Enter** to install.
+- Or open VSCode, press **F1** then type this command `ext install minhthai.vscode-todo-parser`. Press **Enter** to install.
 
 ## Features
 

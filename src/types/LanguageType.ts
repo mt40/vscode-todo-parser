@@ -1,6 +1,6 @@
 import {Dictionary, hashCode} from '../utils/all';
 import {RegexType} from './RegexType';
-import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX, RG_VB, RG_TWIG} from '../const/all';
+import {RG_JAVA, RG_PYTHON, RG_ADA, RG_FSHARP, RG_CSS, RG_LATEX, RG_VB, RG_TWIG, RG_XML} from '../const/all';
 
 var map = new Dictionary<string, LanguageType>();
 
@@ -62,6 +62,8 @@ export class LanguageName {
   static ELIXIR       = new LanguageType("elixir", new RegexType(RG_PYTHON));
   static BASH         = new LanguageType("shellscript", new RegexType(RG_PYTHON));
   static VB           = new LanguageType("vb", new RegexType(RG_VB));
-  static TWIG           = new LanguageType("twig", new RegexType(RG_TWIG));
+  static TWIG         = new LanguageType("twig", new RegexType(RG_TWIG));
   static MATLAB       = new LanguageType("matlab", new RegexType(RG_LATEX));
+  static HTML         = new LanguageType("html", new RegexType(RG_XML));
+  static COLDFUSION   = new LanguageType("cfm", new RegexType(RG_XML));
 }

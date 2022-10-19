@@ -39,7 +39,7 @@ export class TodoType {
   getDisplayString(): string {
     let url = this.getFile().getFile().uri.toString();
     // to take it to the properline
-    let middle = "#";
+    let middle = " #";
     // what if the file is not saved?
     if (url.split(":")[0].toString() == "untitled") {
         middle = "; Line Number: ";
